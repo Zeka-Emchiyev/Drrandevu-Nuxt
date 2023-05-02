@@ -1,0 +1,40 @@
+@import "bootstrap/scss/functions";
+
+@import './variables.scss';
+
+@import "bootstrap/scss/variables";
+
+
+@import 'bootstrap/scss/bootstrap.scss';
+
+// @import url('../../public/fonts/Gilroy/Gilroy-Regular.otf');
+
+html {
+    scroll-behavior: auto !important;
+}
+
+body {
+    // background-color: rgb(96, 212, 90);
+    // font-family: HK Grotesk;
+}
+
+@font-face {
+    font-family: Montserrat;
+    src: url('../../public/fonts/montserrat/Montserrat-Regular.ttf');
+    font-weight: normal;
+}
+
+
+@font-face {
+    font-family: Montserrat;
+    src: url('../../public/fonts/montserrat/Montserrat-Medium.ttf');
+    font-weight: 500;
+}
+
+.btn-success {
+    color: white;
+
+    &:hover {
+        color: white;
+    }
+}
