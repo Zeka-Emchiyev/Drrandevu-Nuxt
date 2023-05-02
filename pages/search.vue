@@ -196,9 +196,10 @@
 </template>
 
 <script>
+// import Pagination from 'vue-pagination-2'
 // import Calendar from "@/components/Calendar"
-// import 'moment/locale/az';
-// import moment from 'moment'
+import 'moment/locale/az';
+import moment from 'moment'
 
 
 export default {
@@ -233,7 +234,7 @@ export default {
             selectedDoctor: {},
             appointmentDate: null,
             selectedDate: null,
-            // moment,
+            moment,
             result: '',
             pagination: {
                 perPage: 15,
@@ -310,7 +311,7 @@ export default {
         },
 
         professionApi() {
-            axios.get(this.$apiUrl + "/api-professions")
+            this.$axios.get(this.$apiUrl + "/api-professions")
                 .then(response => {
                     this.professions = response.data
                     // check if prof id exist. if so then set.
@@ -326,7 +327,7 @@ export default {
                 .catch(e => console.log(e))
         },
         regonsApi() {
-            axios.get(this.$apiUrl + '/api-regions')
+            this.$axios.get(this.$apiUrl + '/api-regions')
                 .then(resp => {
                     this.regions = resp.data
 
@@ -340,7 +341,7 @@ export default {
                 .catch(e => console.log(e))
         },
         clinicsApi() {
-            axios.get(this.$apiUrl + '/api-clinics')
+            this.$axios.get(this.$apiUrl + '/api-clinics')
                 .then(resp => {
                     this.clinics = resp.data
                     if (this.$route.query['clinic-id']) {
@@ -357,12 +358,13 @@ export default {
             // const regionId = this.$route.query['region-id'] || ''
             // const clinicId = this.$route.query['clinic-id'] || ''
             const queryLink = `${this.$apiUrl}/api-doctors?prof-id=${profId}&region-id=${regionId}&clinic-id=${clinicId}`
-            axios.get(queryLink)
+            this.$axios.get(queryLink)
                 .then(response => {
                     // this.doctors = response.data
                     if (response.data != null) {
                         this.doctors = response.data
                     }
+                    console.log(this.doctors)
                 })
                 .catch(e => console.log(e))
         },
