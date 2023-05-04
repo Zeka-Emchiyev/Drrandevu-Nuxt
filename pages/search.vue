@@ -84,7 +84,7 @@
                         <div class="row mt-4">
                             <div class="col-3 col-lg-2">
                                 <div class="rounded-circle border profile-image" :style="{
-                                                                        'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
+                                                                        'background-image': 'url(' + `http://159.223.22.111/${doctor.profile_photo}` + ')'
                                                                     }">
                                 </div>
                                 <router-link class="text-decoration-none profile-link"
@@ -143,7 +143,7 @@
                             <div class="row">
                                 <div class="col-4">
                                     <img class="rounded-circle" style="height: 100px; width: 100px"
-                                        :src="`${$apiUrl}/${selectedDoctor.profile_photo}`" alt="">
+                                        :src="`http://159.223.22.111/${selectedDoctor.profile_photo}`" alt="">
                                 </div>
                                 <div class="col-8">
                                     <h6>{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
@@ -311,7 +311,7 @@ export default {
         },
 
         professionApi() {
-            this.$axios.get(this.$apiUrl + "/api-professions")
+            this.$axios.get('http://159.223.22.111' + "/api-professions")
                 .then(response => {
                     this.professions = response.data
                     // check if prof id exist. if so then set.
@@ -327,7 +327,7 @@ export default {
                 .catch(e => console.log(e))
         },
         regonsApi() {
-            this.$axios.get(this.$apiUrl + '/api-regions')
+            this.$axios.get('http://159.223.22.111' + '/api-regions')
                 .then(resp => {
                     this.regions = resp.data
 
@@ -341,7 +341,7 @@ export default {
                 .catch(e => console.log(e))
         },
         clinicsApi() {
-            this.$axios.get(this.$apiUrl + '/api-clinics')
+            this.$axios.get('http://159.223.22.111' + '/api-clinics')
                 .then(resp => {
                     this.clinics = resp.data
                     if (this.$route.query['clinic-id']) {
@@ -357,7 +357,7 @@ export default {
             // const profId = this.$route.query['prof-id'] || ''
             // const regionId = this.$route.query['region-id'] || ''
             // const clinicId = this.$route.query['clinic-id'] || ''
-            const queryLink = `${this.$apiUrl}/api-doctors?prof-id=${profId}&region-id=${regionId}&clinic-id=${clinicId}`
+            const queryLink = `http://159.223.22.111/api-doctors?prof-id=${profId}&region-id=${regionId}&clinic-id=${clinicId}`
             this.$axios.get(queryLink)
                 .then(response => {
                     // this.doctors = response.data
@@ -407,7 +407,7 @@ export default {
             this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
             this.form.time = this.selectedTime
             if (this.form.fullname !== '' && this.form.phone !== '') {
-                axios.post(this.$apiUrl + "/api-appointments/create", this.form)
+                $axios.post('http://159.223.22.111' + "/api-appointments/create", this.form)
                     .then((resp) => {
                         // console.log(resp)
                         this.result = resp.data
