@@ -327,19 +327,16 @@ export default {
   },
 
   mounted() {
-    // this.professionsApi()
-    // console.log(this.$route.query)
-    // this.asyncData()
-    // this.regonsApi()
-    // this.clinicsApi()
+    // console.log(process.env.API_URL)
     this.myModalProfessions = new bootstrap.Modal(document.getElementById('professionsModal'))
     this.myModalregions = new bootstrap.Modal(document.getElementById('regionsModal'))
     this.myModalclinics = new bootstrap.Modal(document.getElementById('clinicsModal'))
   },
   async asyncData({ $axios }) {
-    const resprofessions = await $axios.$get(`https://admin.drrandevu.az` + "/api-professions")
-    const resregion = await $axios.$get(`https://admin.drrandevu.az` + "/api-regions")
-    const resclinic = await $axios.$get(`https://admin.drrandevu.az` + "/api-clinics")
+    const apiUrl = process.env.API_URL
+    const resprofessions = await $axios.$get(apiUrl + "/api-professions")
+    const resregion = await $axios.$get(apiUrl + "/api-regions")
+    const resclinic = await $axios.$get(apiUrl+ "/api-clinics")
     return {
       professions:resprofessions,
       regions:resregion,

@@ -1,4 +1,5 @@
 export default {
+  ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'drrandevu',
@@ -27,6 +28,7 @@ export default {
       mode: 'client'
     },
     '~/plugins/axios',
+    '~/plugins/pagination.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -34,11 +36,19 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-  ],
+    'vue-ssr-carousel/nuxt',
+    '@nuxtjs/moment'
+    ],
+  moment: {
+    /* module options */
+    defaultLocale: 'az',
+    locales: ['az']
+  },
   build: {
-    env: {
-      API_KEY: process.env.API_KEY
-    }
+
+  },
+  env: {
+    API_URL: process.env.API_URL
   },
   // Modules: https://go.nuxtjs.dev/config-modules
   // Build Configuration: https://go.nuxtjs.dev/config-build
