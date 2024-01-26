@@ -1,0 +1,35 @@
+{
+    "doctor": [
+        {
+            "id": "1",
+            "fullname": "Cavid Babayev",
+            "profession": "Ümumi cərrahiyyə",
+            "clinic": "Nəsrəddin Tusi adına Klinika",
+            "city": "Baki",
+            "address": "Z.Karimov str, apr 248",
+            "lat": "45.45212178785",
+            "lng": "40.1258784545",
+            "clinic_service_price": "50",
+            "online_service_price": "null",
+            "online_service_status": "0",
+            "start_time": "09:00",
+            "end_time": "14:00",
+            "phone": "(+994 12) 598 12 95",
+            "description": "test melumat yaziram",
+            "experiences": [
+                "Nebz klinikasi - 2009 - 2012",
+                "Tusi klinikasi - 2012 - 2022"
+            ],
+            "educations": "",
+            "courses": "null",
+            "congress": "amerika konqressi",
+            "saturdayStatus": "1",
+            "services": [
+                "Damar cərrahiyyəsi",
+                "Abdominoplastika",
+                "Stomatoloq"
+            ],
+            "diseases": "array"
+        }
+    ]
+}

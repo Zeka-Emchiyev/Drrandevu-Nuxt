@@ -234,9 +234,10 @@
 </template>
 
 <script>
+import 'assets/Scss/Home.scss'
 
 export default {
-  name: 'Home',
+  name: 'Index',
 
 
   data() {
@@ -246,8 +247,6 @@ export default {
       searchProfession: '',
       searchRegion: '',
       selectedRegion: '',
-      regions: '',
-      clinics: '',
       searchClinic: '',
       selectedClinic: '',
       frequentlyUsedProfessions: [
@@ -327,72 +326,42 @@ export default {
   },
 
   mounted() {
-    // console.log(process.env.API_URL)
     this.myModalProfessions = new bootstrap.Modal(document.getElementById('professionsModal'))
     this.myModalregions = new bootstrap.Modal(document.getElementById('regionsModal'))
     this.myModalclinics = new bootstrap.Modal(document.getElementById('clinicsModal'))
   },
   async asyncData({ $axios }) {
     const apiUrl = process.env.API_URL
-    const resprofessions = await $axios.$get(apiUrl + "/api-professions")
-    const resregion = await $axios.$get(apiUrl + "/api-regions")
-    const resclinic = await $axios.$get(apiUrl+ "/api-clinics")
+    const resProfessions = await $axios.$get(apiUrl + "/api-professions")
+    const resRegion = await $axios.$get(apiUrl + "/api-regions")
+    const resClinic = await $axios.$get(apiUrl+ "/api-clinics")
     return {
-      professions:resprofessions,
-      regions:resregion,
-      clinics:resclinic,
+      professions:resProfessions,
+      regions:resRegion,
+      clinics:resClinic,
     }
   },
 
   methods: {
 
-    // professionsApi() {
-    //   this.$axios.get(this.$apiUrl + "/api-professions")
-    //     .then(response => {
-    //       this.professions = response.data
-    //       // console.log(this.professions)
-    //       this.professions === this.frequentlyUsedProfessions
-    //
-    //       // console.log(this.frequentlyUsedProfessions)
-    //     })
-    //     .catch(e => console.log(e))
-    // },
-    // regonsApi() {
-    //   this.$axios.get(this.$apiUrl + '/api-regions')
-    //     .then(resp => {
-    //       // console.log(resp)
-    //       this.regions = resp.data
-    //     })
-    //     .catch(e => console.log(e))
-    // },
-    // clinicsApi() {
-    //   axios.get(this.$apiUrl + '/api-clinics')
-    //     .then(resp => {
-    //       this.clinics = resp.data
-    //     })
-    // },
     select(selected) {
       this.searchRegion = selected.name
       this.selectedRegion = selected.id
-      console.log(this.selectedRegion)
       this.myModalregions.hide()
     },
 
     selected(selected) {
       this.searchProfession = selected.name
       this.selectedProfession = selected.id
-      console.log(this.selectedProfession)
       this.myModalProfessions.hide()
     },
     selectClinic(selected) {
       this.searchClinic = selected.name
       this.selectedClinic = selected.id
-      console.log(this.selectedClinic)
       this.myModalclinics.hide()
     },
 
     searchProfessions() {
-      // this.$router.push('/search/' + this.selectedProfession)
       this.$router.push({
         path: '/search',
         query: {
@@ -401,16 +370,6 @@ export default {
           'clinic-id': this.selectedClinic
         }
       })
-
-      // else if (this.selectedProfession != '') {
-      //     // this.$router.push('/search/' + this.selectedProfession)
-      //     this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession } })
-      // }
-      // else if (this.selectedRegion != '') {
-      //     // this.$router.push('/search/' + this.selectedProfession)
-      //     this.$router.push({ path: '/search', query: { 'region-id': this.selectedRegion } })
-      // }
-
     },
     removeProfession() {
       this.searchProfession = ''
@@ -426,451 +385,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.search-title {
-  color: #01234B;
-  font-size: 36px;
-  font-weight: 500;
-  line-height: 40px;
 
-}
-
-.dropdown-menu {
-  min-width: 310px;
-  max-height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  inset: 3px auto auto -30px !important;
-}
-
-.search-content {
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-
-.btn-success {
-  background-color: rgba(31, 193, 23, 0.63) !important;
-}
-
-.profession-container {
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
-.span-line {
-  border-right: 2px solid #A1A1A1;
-  height: 80%;
-  margin: 0 auto;
-}
-
-.input-group {
-  border: 1.5px solid #01234B;
-  border-radius: 8px;
-  background-color: white;
-  height: 48px;
-  flex-wrap: nowrap;
-
-  .input-holder {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-}
-
-.professions-box {
-  border: 1px solid #D9D9D9;
-  border-radius: 10px;
-  height: 200px;
-  width: 180px;
-  background-color: #F2FFF2A1;
-  text-align: center;
-  transition: box-shadow .3s;
-
-}
-
-.professions-box:hover {
-  box-shadow: 0 0 11px rgba(33, 33, 33, .2);
-
-
-}
-
-.profession-photo {
-  height: 100px;
-  border: none;
-  background-color: #4CB147;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.professions-txt {
-  text-decoration: none;
-  font-weight: 500;
-  color: #01234B;
-  font-weight: bold;
-  font-size: 18px;
-
-}
-
-.icon-button {
-  padding-left: 33px;
-  background: url("../assets/Vector.svg") no-repeat left;
-  background-size: 17px;
-  line-height: 30px;
-  background-position: 15px 15px;
-  border: none;
-
-  &:focus {
-    border-color: #4CB147;
-    box-shadow: 0 0 0 0.25rem rgb(76, 177, 71, 15%);
-  }
-}
-
-.input-search {
-  background-color: #fff !important;
-
-  &:focus {
-    box-shadow: none;
-  }
-}
-
-.input-location {
-  background-color: #fff !important;
-
-  &:focus {
-    box-shadow: none;
-  }
-}
-
-.input-insurance {
-  background-color: #fff !important;
-
-  &:focus {
-    box-shadow: none;
-  }
-}
-
-.icon-search {
-  padding-left: 17px;
-  font-size: 15px;
-  color: #01234B;
-}
-
-.icon-insurance {
-  font-size: 18px;
-  color: #01234B;
-}
-
-.icon-location {
-  font-size: 18px;
-  color: #01234B;
-}
-
-.contain-img {
-  background-image: url('../assets/home.svg');
-  height: 80vh;
-  width: 100%;
-}
-
-.text-position {
-  color: #535F72;
-  font-size: 11px;
-  line-height: 20px;
-  font-weight: 500;
-  margin: 0;
-}
-
-.link {
-  text-decoration: none;
-  font-weight: 400;
-  color: #01234B;
-  cursor: pointer;
-  padding: 1px 12px;
-  // margin: 5px;
-  // border-radius: 8px;
-  font-size: 16px;
-  background-color: #fff;
-  border: none !important;
-
-  &:hover {
-    background-color: #DDFDDB;
-  }
-}
-
-.icon-close {
-  right: 8px;
-  color: #01234B;
-  font-size: 23px;
-}
-
-@media screen and (max-width: 576px) {
-  .icon-close {
-    right: 95px;
-    color: #01234B;
-    font-size: 20px;
-  }
-
-  .link {
-    text-decoration: none;
-    font-weight: 400;
-    color: #01234B;
-    cursor: pointer;
-    padding: 1px 12px;
-    // margin: 5px;
-    // border-radius: 8px;
-    font-size: 16px;
-    background-color: #fff;
-    border: none !important;
-
-    &:hover {
-      background-color: #DDFDDB;
-    }
-  }
-
-  .text-link {
-    text-decoration: none;
-    font-weight: 400;
-    color: #01234B;
-    cursor: pointer;
-    padding: 1.5px 12px;
-    font-size: 18px;
-    background-color: #fff;
-  }
-
-  .modal-dialog-scrollable .modal-body {
-    overflow-x: hidden;
-    height: 100vh;
-    width: 100vh;
-  }
-
-
-
-  .text-position {
-    color: #535F72;
-    font-size: 13px;
-    line-height: 20px;
-    font-weight: 500;
-    margin: 0;
-    padding-left: 13px;
-    padding-bottom: 6px;
-  }
-
-  .dropdown-menu {
-    position: fixed !important;
-    margin-top: 0;
-    margin-left: 0;
-    min-width: auto;
-    max-height: none !important;
-  }
-
-  .icon-search {
-    display: none !important;
-    padding-top: 12px;
-    padding-left: 17px;
-    font-size: 15px;
-    color: #01234B;
-  }
-
-  .btn-success {
-    background-color: #8DEB8B !important;
-  }
-
-  .icon-insurance {
-    display: none !important;
-    padding-top: 10px;
-    font-size: 18px;
-    color: #01234B;
-  }
-
-  .icon-location {
-    display: none !important;
-    padding-top: 10px;
-    font-size: 18px;
-    color: #01234B;
-  }
-
-  .span-line {
-    // border-bottom: 1px solid #A1A1A1;
-    margin: auto;
-    display: none;
-    // padding-left: 100%;
-  }
-
-  .icon-button {
-    padding-left: 0;
-    padding-right: 0;
-    background-image: none;
-    width: 100%;
-    // background-size: 17px;
-    display: block;
-    text-align: center;
-    margin-top: 25px;
-
-
-    line-height: 30px;
-    // background-position: 12px 15px;
-
-    &:focus {
-      border-color: #4CB147;
-      box-shadow: 0 0 0 0.25rem rgb(76, 177, 71, 15%);
-    }
-  }
-
-  .input-search {
-    border-bottom: 1px solid #D2D1D1 !important;
-    background-color: #fff !important;
-    width: 100% !important;
-    border-radius: unset;
-    // padding: 10px !important;
-    // text-align: center;
-    background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 14px;
-    padding-left: 30px;
-
-
-    &:focus {
-      box-shadow: none;
-    }
-  }
-
-  .input-search-profession {
-    border-right: 1px solid #D2D1D1 !important;
-    background-color: #fff !important;
-    width: 100% !important;
-    border-radius: unset;
-    // padding: 10px !important;
-    // text-align: center;
-    background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 8px;
-    padding-left: 30px;
-    outline: none;
-  }
-
-  .input-location {
-    border-bottom: 1px solid #D2D1D1 !important;
-    background-color: #fff !important;
-    width: 100% !important;
-    border-radius: unset;
-    // padding: 10px !important;
-    // text-align: center;
-    background: url(../assets/icons/Vector-location.svg) no-repeat scroll 1px 12px;
-    padding-left: 30px;
-
-
-    &:focus {
-      box-shadow: none;
-    }
-  }
-
-  .input-insurance {
-    border-bottom: 1px solid #D2D1D1 !important;
-    background-color: #fff !important;
-    width: 100% !important;
-    // padding: 10px !important;
-    // text-align: center;
-    border-radius: unset;
-
-    background: url(../assets/icons/Group.svg) no-repeat scroll 1px 12px;
-    padding-left: 30px;
-
-
-    &:focus {
-      box-shadow: none;
-    }
-  }
-
-  .search-content {
-    padding-top: 10px;
-    padding-bottom: 20px;
-  }
-
-  .input-group {
-    border: 1.5px solid #01234B;
-    border-radius: 8px;
-    background-color: white;
-    height: 245px;
-    display: block;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 30px;
-    // position: relative;
-    width: 100%;
-    // margin-bottom: 10px;
-  }
-
-  .input-group i {
-    padding: 10px;
-    position: absolute;
-    text-align: center;
-    display: block;
-    z-index: 1;
-    // background-color: #4CB147;
-  }
-
-  .contain-img {
-    background-image: none;
-    background-color: #F5FFF5;
-    width: 100%;
-    margin-bottom: 34px;
-    padding-bottom: 34px;
-    height: auto;
-  }
-
-  .profession-container {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .title-txt {
-    font-size: 26px;
-    padding-left: 10px;
-  }
-
-  .profession-title {
-    font-size: 22px;
-    margin-bottom: 0;
-
-  }
-
-  .professions-box {
-    border: 1px solid #D9D9D9;
-    border-radius: 10px;
-    height: 150px;
-    width: 150px;
-    background-color: #F2FFF2A1;
-    text-align: center;
-    transition: box-shadow .3s;
-
-  }
-
-  .profession-photo {
-    height: 70px;
-    border: none;
-    background-color: #4CB147;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .professions-txt {
-    text-decoration: none;
-    font-weight: 500;
-    color: #01234B;
-    font-weight: bold;
-    font-size: 14px;
-
-  }
-}
-</style>
-
-
-<style>
-/*TODO: globalda edit edib. modallara class ver onun daxilindeki modal-content-i edit ele.*/
-@media screen and (max-width:576px) {
-  .modal-content {
-    border-radius: 0 !important;
-    border: 0 !important;
-  }
-
-  .fade.modal-backdrop.show {
-    opacity: 0 !important;
-  }
-}
-</style>
 

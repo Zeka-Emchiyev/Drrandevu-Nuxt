@@ -23,7 +23,7 @@
 
 <script>
 export default {
-    name: 'MyProjectHeader',
+    name: 'Header',
 
     data() {
         return {

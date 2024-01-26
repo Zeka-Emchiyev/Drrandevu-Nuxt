@@ -19,6 +19,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    'bootstrap-icons/font/bootstrap-icons.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -48,15 +49,17 @@ export default {
 
   },
   env: {
-    API_URL: process.env.API_URL
+    API_URL: process.env.API_URL || 'https://admin.drrandevu.az'
   },
   // Modules: https://go.nuxtjs.dev/config-modules
   // Build Configuration: https://go.nuxtjs.dev/config-build
   modules: [
     '@nuxtjs/axios',
+    '@nuxt/http',
   ],
 
   axios: {
+    API_URL: process.env.API_URL
     // extra config e.g
     // BaseURL: 'https://link-to-API'
   }

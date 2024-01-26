@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <ssr-carousel id="cr-2" ref="cr-2" :navigation-enabled="true" :navigationClickTargetSize="4"
-                  :pagination-enabled="false"
-                  :per-page="4" :scrollPerPage="false" navigationNextLabel="" navigationPrevLabel="">
+
       <div v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')" class="slide-content">
         <div :class="{ 'bg-success text-white': selectedDay === day.date }" class="day-container"
              @click="setDay(day.date)">
@@ -31,7 +29,6 @@
         </div>
       </div>
 
-    </ssr-carousel>
     <div class="text-center mt-2 randevu-take">
       <button :class="{ 'text-white': !dateTimeSelected }" :data-bs-target="'#takeAppointmentModal' + doctor.id"
               :disabled="!dateTimeSelected"

@@ -72,45 +72,30 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     name: 'Footer',
-
     data() {
-        return {
-            professions: '',
-            doctors: '',
-            selectedClinic: '',
-            selectedRegion: '',
-
-        };
+      return {
+        professions: [],
+      };
     },
-
     mounted() {
-        this.professionsApi()
-
+      this.fetchProfessions();
     },
-
     methods: {
-
-        professionsApi() {
-            axios.get(this.$apiUrl + "/api-professions")
-                .then(response => {
-                    this.professions = response.data
-                    // console.log(profession)
-
-                    // console.log(this.professions)
-
-
-                })
-                .catch(e => console.log(e))
-        },
-
+      async fetchProfessions() {
+        try {
+          const apiUrl = process.env.API_URL;
+          const resProfessions = await this.$axios.$get(apiUrl + "/api-professions");
+          this.professions = resProfessions;
+        } catch (error) {
+          console.error('Error fetching professions:', error);
+        }
+      },
         getDoctorsForProfession(professionId) {
             this.$router.push({ path: '/search', query: { 'prof-id': professionId, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
             window.location.reload()
         },
-
 
 
     },

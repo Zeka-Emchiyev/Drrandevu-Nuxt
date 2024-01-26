@@ -22,7 +22,7 @@
 
                 <div class="flex-row flex-wrap ">
                   <div v-for="profession in filterProfessions" class="dropdown-item link"
-                       @click="selected(profession)">
+                       @click="selectProfession(profession)">
                     {{ profession.name }}
                   </div>
                 </div>
@@ -42,7 +42,7 @@
                 <p class="dropdown-item text-position">Rayonlar</p>
 
                 <div class="flex-row flex-wrap">
-                  <div v-for="region in filterRegions" class="dropdown-item link" @click="select(region)">
+                  <div v-for="region in filterRegions" class="dropdown-item link" @click="selectRegion(region)">
                     {{ region.name }}
                   </div>
                 </div>
@@ -89,34 +89,30 @@
                 <div :style="{'background-image': 'url(' + `http://159.223.22.111/${doctor.profile_photo}` + ')'}"
                      class="rounded-circle border profile-image">
                 </div>
-                <router-link :to="{ name: 'doctor', params: { id: doctor.id } }"
-                             class="text-decoration-none profile-link">
-                  Profilə bax
-                </router-link>
+                <nuxt-link class="text-decoration-none profile-link" :to="{ name: 'doctor-doctor', params: { slug: doctor.slug } }">
+                  Profilə bax {{doctor.id}}
+                </nuxt-link>
+
               </div>
               <div class="col-9 col-lg-10">
 
-                <router-link :to="{ name: 'doctor', params: { id: doctor.id } }"
+                <Nuxt-link :to="{ name: 'doctor-doctor', params: { slug: doctor.slug } }"
                              class="text-decoration-none rout-link">
                   {{ doctor.fullname }}
-                </router-link>
+                </Nuxt-link>
                 <span class="text-profession" style="display: block;">{{ doctor.profession }}</span>
                 <span class="city mb-1">{{ doctor.address }} </span>
                 <span class="city fw-bold">{{ doctor.clinic }}</span>
-                <i class="bi bi-shield-check icon-ins pe-1"></i>
-                <p class="insurance">Paşa siğorta</p>
-
-                <!-- <span class="city ">{{ doctor.experiences }}</span> -->
-                <!-- <div><i class="bi bi-star-fill star"></i>
-                    <span class="star-assess mx-1">4.86</span>
-                    <span class="text-worth">(254 dəyərləndirmə )</span>
-                </div> -->
               </div>
             </div>
           </div>
           <div class="col-md-4">
-            <Calendar :doctor="doctor" @dateSelected="showSelectedAppointmentModal"></Calendar>
-
+            <Calendar2
+              @dateSelected="showSelectedAppointmentModal"
+              :doctor="doctor"
+              :selected-doctor="selectedDoctor"
+              @showMore="showMoreSlotsForDoctor"
+            />
           </div>
         </div>
       </div>
@@ -125,49 +121,53 @@
                     :records="doctors.length" class="search-pagination" @paginate="myCallback"/>
       </div>
     </div>
-
+    <MoreSlotsModal
+      :show="showMoreSlotsModal"
+      :doctor="moreSlotsDoctor"
+      @closeModal="showMoreSlotsModal = false"
+      @dateSelected="showSelectedAppointmentModal"
+    />
     <!-- Modal -->
-    <div id="takeAppointmentModal" aria-hidden="hidden" aria-labelledby="takeAppointmentModalLabel" class="modal fade"
-         tabindex="-1">
+    <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
+         aria-hidden="hidden">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="takeAppointmentModalLabel" class="modal-title">Randevu detallari</h5>
-            <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel">Doctonline</h5>
           </div>
-          <div class="modal-body">
-            <div class="container d-flex align-items-center justify-content-center my-5 ">
+          <div class="modal-body position-relative">
+            <button type="button" class="btn-close position-absolute" style="right: 15px; opacity: 0.2;"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="container align-items-center justify-content-center my-4 pt-md-3">
               <div class="row">
-                <div class="col-4">
-                  <img :src="`http://159.223.22.111/${selectedDoctor.profile_photo}`" alt=""
-                       class="rounded-circle" style="height: 100px; width: 100px">
+                <div class="col-3 col-md-2">
+                  <div class="profile-image rounded"
+                       :style="{
+                                            'background-image': 'url(' + `http://159.223.22.111/${selectedDoctor.profile_photo}` + ')'
+                                         }">
+                  </div>
                 </div>
-                <div class="col-8">
-                  <h6>{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
-                  <p> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{
-                      selectedTime
-                    }}</p>
+                <div class="col-9 col-md-10">
+                  <h6 class="fullname">{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
+                  <p  class="time-zone"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
                   <p>{{ selectedDoctor.clinic }}</p>
                 </div>
 
-                <div class="col-8 mt-3">
-                  <label for="">Ad, Soyad</label>
-                  <input v-model="form.fullname" class="form-control" type="text">
+                <div class="col-8">
+                  <label class="doc-profession-modal mb-2 mt-2" for="">Ad, Soyad</label>
+                  <input v-model="form.fullname" :class="{'form-control':true, 'input-error': !formValidation.fullname}" type="text" placeholder="Firəngiz Vahabova">
                 </div>
-                <div class="col-8 mt-2" width="100%">
-                  <label for="">Mobil nömrə</label>
-                  <input v-model="form.phone" class="form-control" type="text">
+                <div class="mb-1 col-8 mt-2 doc-profession-modal">
+                  <label class="mb-2 " for="">Mobil nömrə</label>
+                  <input v-model="form.phone" :class="{'form-control':true, 'input-error': !formValidation.phone}" type="number" placeholder="0501234567">
                 </div>
               </div>
-
+              <button type="button" class="col-12 btn btn-primary mt-5" @click="createAppointment">
+                <div class="doc-profession-button">
+                  Randevunu təsdiqləyin
+                </div>
+              </button>
             </div>
-          </div>
-          <div class="modal-footer">
-            <!-- Button trigger modal -->
-            <button class="btn btn-success" data-bs-target="#successModal" data-bs-toggle="modal" type="button"
-                    @click="createAppointment">
-              Təsdiqlə
-            </button>
           </div>
         </div>
       </div>
@@ -199,23 +199,19 @@ import moment from 'moment'
 
 
 export default {
-  name: 'ProjectsSearch',
+  name: 'Search',
   components: {
     Pagination,
   },
   data() {
     return {
       selectedProfession: '',
-      doctors: [],
-      professions: '',
       searchProfession: '',
       searchRegion: '',
       selectedRegion: '',
-      clinics: '',
       searchClinic: '',
       selectedClinic: '',
       regionsDoctors: null,
-      regions: '',
       selectedDay: null,//moment().toDate().toISOString(),
       selectedTime: '',
       filteredObjects: [],
@@ -228,6 +224,12 @@ export default {
         phone: null,
         time: null,
       },
+      formValidation:{
+        phone: true,
+        fullname: true
+      },
+      showMoreSlotsModal: false,
+      moreSlotsDoctor: null,
       selectedDoctor: {},
       appointmentDate: null,
       selectedDate: null,
@@ -304,6 +306,7 @@ export default {
     const profession = await $axios.get(apiUrl + "/api-professions")
     const region = await $axios.get(apiUrl + "/api-regions")
     const clinic = await $axios.get(apiUrl + "/api-clinics")
+
     const {data} = await $axios.get(apiUrl + '/api-doctors', {
       params: {
         'prof-id': query['prof-id'],
@@ -323,11 +326,16 @@ export default {
       console.log(this.pagination.page)
       window.scroll(0, 0)
     },
-    selected(selected) {
+    showMoreSlotsForDoctor(doctor) {
+      this.moreSlotsDoctor = doctor;
+      console.log(doctor, 'search page')
+      this.showMoreSlotsModal = true;
+    },
+    selectProfession(selected) {
       this.searchProfession = selected.name
       this.selectedProfession = selected.id
     },
-    select(selected) {
+    selectRegion(selected) {
       this.searchRegion = selected.name
       this.selectedRegion = selected.id
       // console.log(this.selectedRegion)
@@ -362,23 +370,30 @@ export default {
       this.myModal.show()
       // console.log(data)
     },
+    formValidationClass(){
+      this.formValidation = {
+        phone: !!this.form.phone,
+        fullname: !!this.form.fullname,
+      }
+      return Object.values(this.formValidation).every((v) => v)
+    },
     createAppointment() {
-      this.form.doctor_id = this.selectedDoctor.id
-      this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
-      this.form.time = this.selectedTime
-      if (this.form.fullname !== '' && this.form.phone !== '') {
+      let is_valid = this.formValidationClass()
+      if (is_valid){
+        this.form.doctor_id = this.selectedDoctor.id
+        this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
+        this.form.time = this.selectedTime
         $axios.post('http://159.223.22.111' + "/api-appointments/create", this.form)
           .then((resp) => {
-            // console.log(resp)
+            console.log(resp)
             this.result = resp.data
             this.myModal.hide()
             this.successModal.show()
           })
           .catch(e => console.log(e))
+        this.form.fullname = ''
+        this.form.phone = ''
       }
-      this.form.fullname = ''
-      this.form.phone = ''
-
     },
 
   },
@@ -447,7 +462,9 @@ export default {
   // padding-top: 15px;
   padding-bottom: 15px;
 }
-
+.input-error {
+  border:1px solid red;
+}
 .text-position {
   color: #535F72;
   font-size: 11px;

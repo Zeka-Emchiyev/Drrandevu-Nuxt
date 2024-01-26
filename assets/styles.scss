@@ -10,31 +10,37 @@
 // @import url('../../public/fonts/Gilroy/Gilroy-Regular.otf');
 
 html {
-    scroll-behavior: auto !important;
+  scroll-behavior: auto !important;
 }
 
 body {
-    // background-color: rgb(96, 212, 90);
-    // font-family: HK Grotesk;
+  // background-color: rgb(96, 212, 90);
+  // font-family: HK Grotesk;
 }
 
 @font-face {
-    font-family: Montserrat;
-    src: url('../../public/fonts/montserrat/Montserrat-Regular.ttf');
-    font-weight: normal;
+  font-family: Montserrat;
+  src: url('@/../public/fonts/montserrat/Montserrat-Regular.ttf');
+  font-weight: normal;
 }
 
 
 @font-face {
-    font-family: Montserrat;
-    src: url('../../public/fonts/montserrat/Montserrat-Medium.ttf');
-    font-weight: 500;
+  font-family: Montserrat;
+  src: url('@/../public/fonts/montserrat/Montserrat-Medium.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: Montserrat;
+  src: url('@/../public/fonts/montserrat/Montserrat-SemiBold.ttf');
+  font-weight: 600;
 }
 
 .btn-success {
-    color: white;
+  color: white;
 
-    &:hover {
-        color: white;
-    }
+  &:hover {
+    color: white;
+  }
 }
