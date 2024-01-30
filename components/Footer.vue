@@ -37,10 +37,10 @@
                             Əlaqə
                         </h6>
                         <div style="margin-bottom: 12px;">
-                            <a href="tel:(050)-831-31-16" class="link text-decoration-none">+994
+                            <a href="tel:(050)-831-31-16" class="link-phone text-decoration-none">+994
                                 (50) 831 31 16</a>
                         </div>
-                        <p class="link">Xan Şuşinski küç 21</p>
+                        <p class="link-phone">Xan Şuşinski küç 21</p>
                     </div>
                     <div class="col-3 d-md-none mb-5 d-flex">
                         <a class="me-4" href="https://www.facebook.com/"><img src="../assets/fb.png" alt=""></a>
@@ -119,7 +119,7 @@ footer {
     background-color: #444444;
 }
 
-.link {
+.link-phone {
     text-decoration: none;
     color: white;
     font-size: 14px;

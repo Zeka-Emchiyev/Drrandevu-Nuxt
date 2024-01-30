@@ -1,3 +1,5 @@
+@import 'animate.css';
+
 .search-title {
   color: #01234B;
   font-size: 36px;
@@ -390,6 +392,10 @@
   .profession-container {
     margin-top: 20px;
     margin-bottom: 20px;
+    .profession-title {
+      font-size: 26px !important;
+      margin-bottom: 0;
+    }
   }
 
   .title-txt {
@@ -397,11 +403,6 @@
     padding-left: 10px;
   }
 
-  .profession-title {
-    font-size: 22px;
-    margin-bottom: 0;
-
-  }
 
   .professions-box {
     border: 1px solid #D9D9D9;

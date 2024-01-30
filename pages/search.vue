@@ -89,14 +89,14 @@
                 <div :style="{'background-image': 'url(' + `http://159.223.22.111/${doctor.profile_photo}` + ')'}"
                      class="rounded-circle border profile-image">
                 </div>
-                <nuxt-link class="text-decoration-none profile-link" :to="{ name: 'doctor-doctor', params: { slug: doctor.slug } }">
-                  Profilə bax {{doctor.id}}
+                <nuxt-link class="text-decoration-none profile-link" :to="{ name: 'doctor-slug', params: { slug: doctor.slug } }">
+                  Profilə bax
                 </nuxt-link>
 
               </div>
               <div class="col-9 col-lg-10">
 
-                <Nuxt-link :to="{ name: 'doctor-doctor', params: { slug: doctor.slug } }"
+                <Nuxt-link :to="{ name: 'doctor-slug', params: { slug: doctor.slug } }"
                              class="text-decoration-none rout-link">
                   {{ doctor.fullname }}
                 </Nuxt-link>
@@ -142,9 +142,7 @@
               <div class="row">
                 <div class="col-3 col-md-2">
                   <div class="profile-image rounded"
-                       :style="{
-                                            'background-image': 'url(' + `http://159.223.22.111/${selectedDoctor.profile_photo}` + ')'
-                                         }">
+                       :style="{'background-image': 'url(' + `http://159.223.22.111/${selectedDoctor.profile_photo}` + ')'}">
                   </div>
                 </div>
                 <div class="col-9 col-md-10">
@@ -174,21 +172,36 @@
     </div>
 
     <!-- Modal result -->
-    <div id="successModal" aria-hidden="true" aria-labelledby="successModalLabel" class="modal fade" tabindex="-1">
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content h-100">
           <div class="modal-header">
-            <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            <nuxt-link to="/" class="text-decoration-none" >
+              <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel" data-bs-dismiss="modal">Doctonline</h5>
+            </nuxt-link>
           </div>
-          <div class="modal-body">
-            <p class="clinic-border text-center"><i class="bi bi-check-circle-fill d-block fs-1 "
-                                                    style="color: #4CB147; "></i>
+          <div class="modal-body mt-4">
+            <div class="d-flex gap-3">
+              <div class="">
+                <div class="profile-image rounded" :style="{'background-image': 'url(' + `http://159.223.22.111/${selectedDoctor.profile_photo}` + ')'}">
+                </div>
+              </div>
+              <div class="">
+                <h6 class="fullname">{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
+                <div class="time-zone mb-2"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
+                <div class="doctor-clinic">{{ selectedDoctor.clinic }}</div>
+              </div>
+            </div>
+            <p class="ms-4 fullname mt-4">
+              <img class="pe-2" src="@/assets/icons/check-circle.svg" alt="">
               {{ result.message }}
             </p>
           </div>
         </div>
       </div>
     </div>
+
+
   </div>
 </template>
 
@@ -200,6 +213,7 @@ import moment from 'moment'
 
 export default {
   name: 'Search',
+  layout:'default',
   components: {
     Pagination,
   },
@@ -383,7 +397,7 @@ export default {
         this.form.doctor_id = this.selectedDoctor.id
         this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
         this.form.time = this.selectedTime
-        $axios.post('http://159.223.22.111' + "/api-appointments/create", this.form)
+        this.$axios.post('http://159.223.22.111' + "/api-appointments/create", this.form)
           .then((resp) => {
             console.log(resp)
             this.result = resp.data
@@ -399,286 +413,6 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
-.search-pagination ::v-deep {
-
-  li.VuePagination__pagination-item-prev-chunk,
-  .VuePagination__pagination-item-next-chunk {
-    display: none !important;
-  }
-
-  .page-link.active {
-    background-color: #4CB147;
-  }
-
-  li.VuePagination__pagination-item-prev-page a {
-    visibility: hidden;
-  }
-
-  li.VuePagination__pagination-item-prev-page {
-    background-image: url(../assets/icons/icon-back.svg);
-    background-repeat: no-repeat;
-    background-size: 15px;
-    background-position: center;
-    border: 1px solid #dee2e6;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    height: 37.5px;
-    cursor: pointer;
-
-    &:hover {
-      color: #4CB147 !important;
-    }
-  }
-
-  li.VuePagination__pagination-item-next-page a {
-    visibility: hidden;
-  }
-
-  li.VuePagination__pagination-item-next-page {
-    background-image: url(../assets/icons/next-icon.svg);
-    background-repeat: no-repeat;
-    background-size: 15px;
-    background-position: center;
-    border: 1px solid #dee2e6;
-    border-left: 0;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    height: 37.5px;
-    cursor: pointer;
-
-  }
-
-  .pagination > li > a {
-    color: #01234B;
-  }
-
-}
-
-.hold-doctor {
-  // border-top: 1px solid #EDF0F4;
-  border-bottom: 1.5px solid #EDF0F4;
-  // padding-top: 15px;
-  padding-bottom: 15px;
-}
-.input-error {
-  border:1px solid red;
-}
-.text-position {
-  color: #535F72;
-  font-size: 11px;
-  line-height: 20px;
-  font-weight: 500;
-  margin: 0;
-}
-
-.profile-link {
-  color: #0072DB;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  padding-left: 18px;
-}
-
-.insurance {
-  font-size: 15px;
-  font-weight: 500;
-  color: #01234B;
-  display: inline;
-}
-
-.icon-ins {
-  font-size: 12px;
-  color: #0072DB;
-}
-
-.input-all {
-  background-color: #fff !important;
-
-  &:focus {
-    box-shadow: none;
-  }
-}
-
-.icon-search {
-  padding-left: 17px;
-  font-size: 15px;
-  color: #01234B;
-}
-
-.icon-insurance {
-  font-size: 18px;
-  color: #01234B;
-}
-
-.icon-location {
-  font-size: 18px;
-  color: #01234B;
-}
-
-
-.span-line {
-  border-right: 2px solid #A1A1A1;
-  height: 80%;
-  margin: auto;
-}
-
-.professions-txt {
-  text-decoration: none;
-  font-weight: 400;
-  color: #01234B;
-  font-weight: bold;
-  font-size: 13px;
-}
-
-.icon-button {
-  background-color: rgba(31, 193, 23, 0.63) !important;
-  padding-left: 33px;
-  background: url("../assets/Vector.svg") no-repeat left;;
-  background-size: 17px;
-  line-height: 30px;
-  background-position: 15px 15px;
-  border: none;
-
-  &:focus {
-    border-color: #4CB147;
-    box-shadow: 0 0 0 0.25rem rgb(76, 177, 71, 15%);
-  }
-}
-
-.input-group {
-  border: 1.5px solid #01234B;
-  border-radius: 8px;
-  background-color: white;
-  height: 48px;
-  flex-wrap: nowrap;
-
-  .input-holder {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-}
-
-.link {
-  text-decoration: none;
-  font-weight: 400;
-  color: #01234B;
-  cursor: pointer;
-  padding: 1px 12px;
-  // margin: 5px;
-  border-radius: 8px;
-  font-size: 13px;
-
-  &:hover {
-    background-color: #DDFDDB;
-  }
-}
-
-.rout-link {
-  color: #01234B;
-  font-weight: 600;
-  font-size: 24px;
-
-}
-
-.text-profession {
-  color: #01234B;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.city {
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 500;
-  display: block;
-  color: #01234B;
-}
-
-.star {
-  color: #ffad0d;
-  font-size: 24px;
-
-}
-
-.star-assess {
-  color: #ffad0d;
-  font-size: 20px;
-
-}
-
-.text-worth {
-  color: #273142;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-}
-
-// .profile {
-//     color: #4cb147;
-
-// }
-
-.profile-image {
-  width: 104px;
-  height: 104px;
-  background-size: cover;
-  background-position: center top;
-}
-
-@media screen and (max-width: 576px) {
-  .profile-image {
-    width: 75px;
-    height: 75px;
-    font-weight: 400;
-    line-height: 17px;
-  }
-
-  .text-profession {
-    color: #848b98;
-    font-size: 15px;
-  }
-
-  .rout-link {
-    color: #01234B;
-    font-size: 16px;
-  }
-
-  .star {
-    color: #ffad0d;
-    font-size: 20px;
-
-  }
-
-  .star-assess {
-    color: #ffad0d;
-    font-size: 16px;
-
-  }
-
-  .text-worth {
-    color: #273142;
-    font-size: 14px;
-    line-height: 24px;
-    font-weight: 400;
-  }
-
-  .city {
-    font-size: 12px;
-    line-height: 24px;
-  }
-
-  .profile-link {
-    color: #0072DB;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 15px;
-    padding-left: 13px;
-    display: block;
-    margin-top: 5px;
-    white-space: nowrap;
-  }
-}
+@import "assets/Scss/Search";
 </style>
