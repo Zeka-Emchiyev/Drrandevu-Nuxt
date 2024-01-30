@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarDoctor></NavbarDoctor>
+<!--    <NavbarDoctor></NavbarDoctor>-->
     <div class="container">
       <div class="row">
         <div class="col-md-7">
@@ -235,39 +235,43 @@
               <p class="location-content my-3">
                 {{ doctor.clinic }}</p>
             </div>
-<!--            <div class="d-none d-md-block">-->
-<!--                <carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"-->
-<!--                navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">-->
-<!--                <slide v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')">-->
-<!--                  <div @click="setDay(day.date)" class="day-container"-->
-<!--                    :class="{ 'bg-success text-white': selectedDay === day.date }">-->
-<!--                     {{ moment(day.date).format('MMM DD') }}-->
-<!--                  </div>-->
-<!--                  <div class="time-slots mt-4">-->
-<!--                    <div v-for="(timeSlot, index) in day.timeSlots">-->
-<!--                      <div v-if="index < 4 && !day.showMore" class="time-slot"-->
-<!--                        :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"-->
-<!--                        @click="setSelectedTime(day, timeSlot)">-->
-<!--                        {{ timeSlot.timeFormatted }}-->
-<!--                      </div>-->
-<!--                      <div v-if="day.showMore" class="time-slot"-->
-<!--                        :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"-->
-<!--                        @click="setSelectedTime(day, timeSlot)">-->
-<!--                        {{ timeSlot.timeFormatted }}-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                    <div v-show="!day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day)">daha çox-->
-<!--                    </div>-->
-<!--                    <div v-show="day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day, false)">daha-->
-<!--                      az</div>-->
-<!--                  </div>-->
-<!--                </slide>-->
-<!--              </carousel>-->
-<!--            </div>-->
+            <div class="d-none d-md-block">
+              <client-only>
+              <carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
+                        navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
+                <slide v-for="day in monthlyDates" :key="$moment(day.date).format('MMM DD')">
+                  <div @click="setDay(day.date)" class="day-container"
+                    :class="{ 'bg-success text-white': selectedDay === day.date }">
+                     {{ $moment(day.date).format('MMM DD') }}
+                  </div>
+                  <div class="time-slots mt-4">
+                    <div v-for="(timeSlot, index) in day.timeSlots">
+                      <div v-if="index < 4 && !day.showMore" class="time-slot"
+                        :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                        @click="setSelectedTime(day, timeSlot)">
+                        {{ timeSlot.timeFormatted }}
+                      </div>
+                      <div v-if="day.showMore" class="time-slot"
+                        :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                        @click="setSelectedTime(day, timeSlot)">
+                        {{ timeSlot.timeFormatted }}
+                      </div>
+                    </div>
+                    <div v-show="!day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day)">daha çox
+                    </div>
+                    <div v-show="day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day, false)">daha
+                      az</div>
+                  </div>
+                </slide>
+              </carousel>
+              </client-only>
+
+            </div>
+
             <div class="text-center mt-2">
               <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
-                :class="{ 'text-white': !dateTimeSelected }" class="btn btn-primary d-none d-md-block col-11 my-3 mx-auto"
-                :disabled="!dateTimeSelected">
+                      :class="{ 'text-white': !dateTimeSelected }" class="btn btn-primary d-none d-md-block col-11 my-3 mx-auto"
+                      :disabled="!dateTimeSelected">
                 Randevu al
               </button>
             </div>
@@ -297,7 +301,7 @@
                       </div>
                       <div class="">
                           <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
-                          <div class="time-zone mb-2"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
+                          <div class="time-zone mb-2"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
                           <div class="doctor-clinic">{{ doctor.clinic }}</div>
                       </div>
                   </div>
@@ -342,7 +346,7 @@
                         </div>
                         <div class="">
                             <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
-                            <div class="time-zone mb-2"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
+                            <div class="time-zone mb-2"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
                             <div class="doctor-clinic">{{ doctor.clinic }}</div>
                         </div>
                     </div>
@@ -358,21 +362,19 @@
   </div>
 </template>
 <script>
-import 'moment/locale/az';
-import axios from 'axios'
-import moment from 'moment'
+
 import FaqHolder from "@/components/FaqHolder.vue";
 import NavbarDoctor from "@/components/NavbarDoctor.vue";
 // import GoogleMapLoader from '@/components/GoogleMapLoader.vue';
 import Calendar2 from "@/components/Calendar2.vue";
 import MoreSlotsModal from "@/components/MoreSlotsModal.vue";
-
 export default {
-  name: 'doctor',
+  name: 'slug',
+  layout:'doctor',
   components: {MoreSlotsModal, Calendar2, FaqHolder, NavbarDoctor,  },
   data() {
     return {
-      selectedDay: null,//moment().toDate().toISOString(),
+      selectedDay: null,//$moment().toDate().toISOString(),
       selectedTime: '',
       selectedHeader: 'information',
       selectedBox: 'clinic',
@@ -394,7 +396,6 @@ export default {
         showMoreSlotsModal: false,
         moreSlotsDoctor: null,
         appointmentDate: null,
-      moment,
       result: '',
         buttonLink: true,
     };
@@ -405,29 +406,17 @@ export default {
     }
   },
   mounted() {
-    this.moment.locale('az')
-    // this.generateTimeSlots()
-    // this.generateDays()
     this.takeAppointmentModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
     this.successModal = new bootstrap.Modal(document.getElementById('successModal'),{ backdrop: 'static', keyboard: false })
-
   },
   async fetch() {
     try {
       const doctorId = this.$route.params.slug.split('-').slice(-1)[0];
       const response = await this.$axios.get("/api-doctors?doctor-id=" + doctorId);
       this.doctor = response.data;
-      console.log(this.doctor )
-      // Assume generateTimeSlots and monthlyDates are methods in your component
-      const timeSlots = this.generateTimeSlots();
-      this.monthlyDates = this.monthlyDates.map(day => {
-        return {
-          ...day,
-          timeSlots: JSON.parse(JSON.stringify(timeSlots))
-        };
-      });
-
-      console.log(this.monthlyDates);
+      this.generateTimeSlots()
+      this.generateDays()
+      this.monthlyDatesSlot()
     } catch (e) {
       console.error(e);
     }
@@ -457,10 +446,10 @@ export default {
         let is_valid = this.formValidationClass()
         if (is_valid) {
             this.form.doctor_id = this.doctor.id
-            this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
+            this.form.date = this.$moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
             this.form.time = this.selectedTime
             const apiUrl = process.env.API_URL
-            axios.post(apiUrl + "/api-appointments/create", this.form)
+            this.$axios.post(apiUrl + "/api-appointments/create", this.form)
                 .then((resp) => {
                     console.log(resp)
                     this.result = resp.data
@@ -474,9 +463,9 @@ export default {
     },
     generateDays() {
       // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
-      // const today = moment()
-      const tomorrow = moment().add(1, 'days');
-      const monthLater = moment().add(1, 'month')
+      // const today = $moment()
+      const tomorrow = this.$moment().add(1, 'days');
+      const monthLater = this.$moment().add(1, 'month')
       let enumerateDaysBetweenDates = (startDate, endDate) => {
         let now = startDate.clone(), dates = [];
         let i = 0;
@@ -493,8 +482,8 @@ export default {
       this.monthlyDates = enumerateDaysBetweenDates(tomorrow, monthLater)
     },
     generateTimeSlots() {
-      const startTime = moment(this.doctor.start_time, "HH:mm")
-      const endTime = moment(this.doctor.end_time, "HH:mm")
+      const startTime = this.$moment(this.doctor.start_time, "HH:mm")
+      const endTime = this.$moment(this.doctor.end_time, "HH:mm")
       const diffInMinutes = endTime.diff(startTime, 'minutes')
       const slotMinute = 30
       for (let i = 0;i <= diffInMinutes;i += slotMinute) {
@@ -505,6 +494,15 @@ export default {
           time: time
         })
       }
+    },
+    monthlyDatesSlot(){
+      // Assume generateTimeSlots and monthlyDates are methods in your component
+      this.monthlyDates = this.monthlyDates.map(day => {
+        return {
+          ...day,
+          timeSlots: JSON.parse(JSON.stringify(this.timeSlots))
+        };
+      });
     },
     setDay(day) {
       this.selectedDay = day.date
@@ -522,458 +520,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.input-error {
-  border:1px solid red;
-}
-.doctor-clinic{
-  color: #596573;
-  font-family: Montserrat;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-}
-.profile-image-main {
-  height: 150px;
-  width: 150px;
-  background-size: cover;
-  border-radius: 50%;
-  background-position: center top;
-}
-
-.fullname {
-  font-family: Montserrat;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 20px;
-  color: #01234B;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
-  margin: 0;
-  /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-input[type=number] {
-  -moz-appearance: textfield;
-  /* Firefox */
-}
-
-#takeAppointmentModal {
-  .profile-image {
-    height: 80px;
-    width: 70px;
-    background-size: cover;
-  }
-}
-#successModal{
-  .profile-image {
-    height: 80px;
-    width: 70px;
-    background-size: cover;
-  }
-}
-.day-container {
-  margin: 0 auto;
-  width: 64px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 8px;
-  color: #01234B;
-  font-weight: bold;
-  //border: 1px solid #edf0f4;
-  cursor: pointer;
-  transition: border-color .15s linear, background-color .15s linear;
-  //margin-left: 5px;
-  //margin-right: 5px;
-}
-
-.time-slots {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .time-slot {
-    width: 64px;
-    height: 36px;
-    cursor: pointer;
-    text-align: center;
-    display: block;
-    border-radius: 8px;
-    background-color: #F9F9F9;
-    border: 1px solid #edf0f4;
-    color: #101825;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: -.1px;
-    transition: background-color .15s linear, color .15s linear, border-color .15s linear;
-    padding: 9px 3px;
-    margin-bottom: 10px;
-    color: #01234B;
-    font-weight: bold;
-
-    &.slot-more {
-      font-size: 10px;
-    }
-  }
-}
-
-// .VueCarousel-inner {
-//   visibility: visible !important;
-//   transform: translate(0px, 0px);
-//   transition: transform 0.5s ease 0s;
-//   flex-basis: 110.5px !important;
-//   height: auto !important;
-// }
-
-.VueCarousel-slide {
-  border-right: 1px solid #EDF1F7;
-}
-
-.VueCarousel-navigation-button {
-  top: 20px;
-}
-
-.VueCarousel-navigation-prev {
-  &:before {
-    content: url(assets/icons/arrow-ios-left.svg);
-    height: 20px;
-    width: 20px;
-  }
-}
-
-.VueCarousel-navigation-next {
-  &:before {
-    content: url(assets/icons/arrow-ios-right.svg);
-    height: 20px;
-    width: 20px;
-  }
-}
+@import "assets/Scss/Doctor";
 </style>
 <style lang="scss">
-.icon-clinic {
-  // background-color: #0F42B0;
-  color: #01234B;
-  padding-right: 10px;
-}
-
-.randevu-title {
-  font-size: 24px;
-  color: #01234B;
-  line-height: 32px;
-  font-weight: 500;
-}
-
-.randevu-type {
-  font-size: 14px;
-  color: #01234B;
-  line-height: 24px;
-  font-weight: 500;
-}
-
-.hold-on {
-  padding-top: 7px;
-}
-
-.icon-video {
-  background-color: #AC6BFF;
-  color: white;
-}
-
-.b-default {
-  border: 1px solid #EDF0F4;
-  cursor: pointer;
-  height: 40px;
-}
-
-.clinic-video-txt {
-  font-size: 14px;
-  font-weight: 400;
-  color: #01234B;
-  line-height: 12px;
-}
-
-.clinic-border {
-  border: 1.5px solid #0F42B0;
-  background-color: #DBE3F4;
-  cursor: pointer;
-}
-
-.image {
-  width: 153px;
-  height: 153px;
-}
-
-.doc-profession {
-  font-size: 16px;
-  line-height: 28px;
-  font-weight: 500;
-  color: #01234B;
-  // font-family: Gilroy-Regular;
-}
-.doc-profession-modal {
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
-  color: #01234B;
-   font-family: Montserrat;
-}
-.doc-profession-button{
-  font-size: 20px;
-  margin-bottom: 12px;
-  margin-top: 12px;
-  line-height: 20px;
-  font-weight: 500;
-  color: #01234B;
-  font-family: Montserrat;
-}
-.time-zone{
-  font-family: Montserrat;
-  font-size: 14px;
-  font-weight: 400;
-  color: #01234B;
-  line-height: 20px;
-}
-.name-surname {
-  font-size: 34px;
-  color: #01234B;
-  font-weight: 500;
-  line-height: 40px;
-  line-height: 40px;
-}
-
-.city {
-  // position: relative;
-  padding-right: 10px;
-  font-size: 14px;
-  line-height: 20px;
-  color: #535353;
-}
-
-.location-content {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  color: #01234B;
-}
-
-// .location {
-//   height: 56px;
-//   border-radius: 8px;
-//   padding: 0 10 px;
-//   margin: auto;
-//   display: flex;
-//   border: 1px solid #4CB147;
-//   background-color: #f2faf2;
-// }
-
-.location-icon {
-  // font-size: 12px;
-  color: #4CB147;
-}
-
-.location-square {
-  font-size: 10px;
-}
-
-.text-header {
-  font-size: 14px;
-  line-height: 20px;
-  text-decoration: none;
-  margin-right: 20px;
-  color: #01234B;
-  padding-bottom: 18px;
-
-  &.text-header-bottom-line {
-    border-bottom: 2px solid #01234B;
-  }
-}
-
-.head {
-  font-size: 20px;
-  line-height: 32px;
-  font-weight: 600;
-  color: #01234B;
-}
-
-.head-ege {
-  font-size: 24px;
-  line-height: 24px;
-  font-weight: bold;
-}
-
-.text-experience {
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: bold;
-}
-
-.street {
-  font-size: 18px;
-  line-height: 24px;
-}
-
-.number {
-  font-size: 20px;
-  line-height: 24px;
-}
-
-.text {
-  font-size: 16px;
-  line-height: 24px;
-  color: #01234B;
-}
-
-.txt-light {
-  font-size: 14px;
-  line-height: 20px;
-  color: #848B98;
-}
-
-.accordion-body {
-  font-size: 16px;
-  line-height: 22px;
-}
-
-.text-kanal {
-  font-size: 14px;
-  line-height: 20px;
-}
-
-
-
-.randevu {
-  width: 183px;
-  height: 80px;
-}
-
-@media screen and (max-width: 576px) {
-  .profile-image-main {
-    height: 82px !important;
-    width: 82px !important;
-    background-size: cover;
-    border-radius: 50%;
-    background-position: center top;
-  }
-  .doc-profession-button{
-    font-size: 16px;
-  }
-  .randevu-title{
-    font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 20px;
-  }
-  .time-zone{
-    font-family: Montserrat;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-  }
-
-  #takeAppointmentModal {
-    .modal-dialog {
-      margin: 0;
-      height: 100%;
-    }
-  }
-  #successModal {
-    .modal-dialog {
-      margin: 0;
-      height: 100%;
-    }
-  }
-  #randevuModal {
-    .modal-dialog {
-      margin: 0;
-      height: 100%;
-    }
-  }
-  .image {
-    width: 80px;
-    height: 80px;
-  }
-
-  .doc-profession {
-    font-size: 16px;
-    line-height: 20px;
-  }
-  .doc-profession-modal {
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: 600;
-  }
-
-  .name-surname {
-    font-size: 20px;
-    line-height: 28px;
-  }
-
-  .head {
-    font-size: 20px;
-    line-height: 28px;
-  }
-
-  .head-ege {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 700;
-  }
-
-  .text-experience {
-    font-size: 14px;
-    line-height: 24px;
-    font-weight: bold;
-  }
-
-  .street {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  .text-kanal {
-    font-size: 14px;
-    line-height: 20px;
-  }
-
-  .text-faq {
-    font-size: 20px;
-    line-height: 28px;
-  }
-
-  .randevu {
-    width: 160px;
-    height: 48px;
-    border: 1px solid #4CB147;
-    border-radius: 8px;
-
-  }
-
-  .accordion-button {
-    font-size: 14px !important;
-    line-height: 16.8px;
-  }
-
-  .accordion-body {
-    font-size: 14px;
-    line-height: 19.6px;
-    color: rgba(60, 60, 67, 0.85);
-    font-family: 'HK Grotesk';
-  }
-
-  .text-nowrap {
-    font-size: 14px;
-  }
-
-  .location-content {
-    font-size: 14px;
-  }
-}
+@import "assets/Scss/Global";
 </style>
 
 

@@ -21,6 +21,15 @@ export default {
   css: [
     'bootstrap-icons/font/bootstrap-icons.css'
   ],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "~/assets/_styles.scss" as *;'
+        }
+      }
+    }
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -30,6 +39,9 @@ export default {
     },
     '~/plugins/axios',
     '~/plugins/pagination.js',
+
+    { src: '~/plugins/vue-carousel.js', mode: 'client' }
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

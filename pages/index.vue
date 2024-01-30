@@ -99,7 +99,7 @@
                   <i class="bi bi-search icon-search"></i>
                   <input v-model="searchProfession" class="icon dropdown-toggle form-control border-0 input-search"
                     type="text" placeholder="İxtisaslar" data-bs-toggle="modal" data-bs-target="#professionsModal"
-                    disabled>
+                    >
 
                 </div>
 
@@ -137,7 +137,7 @@
                   <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
 
                   <input v-model="searchRegion" class="icon dropdown-toggle form-control border-0 input-location"
-                    type="text" placeholder="Rayonlar" data-bs-toggle="modal" data-bs-target="#regionsModal" disabled>
+                    type="text" placeholder="Rayonlar" data-bs-toggle="modal" data-bs-target="#regionsModal" >
 
                 </div>
 
@@ -174,7 +174,7 @@
                   <i class="bi bi-shield-check icon-insurance ms-2"></i>
 
                   <input v-model="searchClinic" class="icon dropdown-toggle form-control border-0 input-insurance"
-                    type="text" placeholder="Klinikalar" data-bs-toggle="modal" data-bs-target="#clinicsModal" disabled>
+                    type="text" placeholder="Klinikalar" data-bs-toggle="modal" data-bs-target="#clinicsModal" >
                 </div>
 
                 <button @click="searchProfessions()" class="icon-button btn btn-success rounded-start">
@@ -189,7 +189,7 @@
                   <div class="modal-content">
                     <div class="modal-header position-relative">
                       <i v-if="searchClinic.length > 0" @click="removeClinic()"
-                        class="bi bi-x icon-close position-absolute"></i>C
+                        class="bi bi-x icon-close position-absolute"></i>
                       <input v-model="searchClinic" class="icon border-0 input-search-profession" type="text"
                         placeholder="Klinikalar">
                       <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
@@ -221,12 +221,12 @@
       <h1 class="profession-title">Ən çox axtarılan ixtisaslar</h1>
       <div class="row">
         <div class="col-6 col-md-2 my-2" v-for="profession in frequentlyUsedProfessions">
-          <router-link
-            :to="{ name: 'search', query: { 'prof-id': profession.id, 'region-id': '', 'clinic-id': '' }, params: { id: profession.id } }"
+          <nuxt-link
+            :to="{ name: 'search', query: { 'prof-id': profession.id }, params: { id: profession.id } }"
             class="professions-box d-block text-decoration-none">
-            <img class="rounded-circle profession-photo" :src="profession.photo" alt="image">
+            <img class="rounded-circle profession-photo" :src="profession.photo" :alt="profession.name">
             <p class="professions-txt ">{{ profession.name }}</p>
-          </router-link>
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -235,10 +235,11 @@
 
 <script>
 import 'assets/Scss/Home.scss'
+import 'assets/Scss/Global.scss'
 
 export default {
   name: 'Index',
-
+  // layout:'default',
 
   data() {
     return {
@@ -329,6 +330,7 @@ export default {
     this.myModalProfessions = new bootstrap.Modal(document.getElementById('professionsModal'))
     this.myModalregions = new bootstrap.Modal(document.getElementById('regionsModal'))
     this.myModalclinics = new bootstrap.Modal(document.getElementById('clinicsModal'))
+    console.log(this.frequentlyUsedProfessions[0].photo)
   },
   async asyncData({ $axios }) {
     const apiUrl = process.env.API_URL
@@ -384,6 +386,4 @@ export default {
   },
 };
 </script>
-
-
 

@@ -1,0 +1,355 @@
+/*TODO: globalda edit edib. modallara class ver onun daxilindeki modal-content-i edit ele.*/
+@media screen and (max-width:576px) {
+  .modal-content {
+    border-radius: 0 !important;
+    border: 0 !important;
+  }
+
+  .fade.modal-backdrop.show {
+    opacity: 0 !important;
+  }
+}
+.VueCarousel-slide {
+  border-right: 1px solid #EDF1F7;
+}
+
+.VueCarousel-navigation-button {
+  outline: none !important;
+  top: 20px !important;
+}
+
+.VueCarousel-navigation-prev {
+  left: 10px !important;
+  &:before {
+    content: url(@/assets/icons/arrow-ios-left.svg);
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.VueCarousel-navigation-next {
+  right: 10px !important;
+  &:before {
+    content: url(@/assets/icons/arrow-ios-right.svg);
+    height: 20px;
+    width: 20px;
+  }
+}
+.icon-clinic {
+  // background-color: #0F42B0;
+  color: #01234B;
+  padding-right: 10px;
+}
+
+.randevu-title {
+  font-size: 24px;
+  color: #01234B;
+  line-height: 32px;
+  font-weight: 500;
+}
+
+.randevu-type {
+  font-size: 14px;
+  color: #01234B;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.hold-on {
+  padding-top: 7px;
+}
+
+.icon-video {
+  background-color: #AC6BFF;
+  color: white;
+}
+
+.b-default {
+  border: 1px solid #EDF0F4;
+  cursor: pointer;
+  height: 40px;
+}
+
+.clinic-video-txt {
+  font-size: 14px;
+  font-weight: 400;
+  color: #01234B;
+  line-height: 12px;
+}
+
+.clinic-border {
+  border: 1.5px solid #0F42B0;
+  background-color: #DBE3F4;
+  cursor: pointer;
+}
+
+.image {
+  width: 153px;
+  height: 153px;
+}
+
+.doc-profession {
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 500;
+  color: #01234B;
+  // font-family: Gilroy-Regular;
+}
+.doc-profession-modal {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #01234B;
+  font-family: Montserrat;
+}
+.doc-profession-button{
+  font-size: 20px;
+  margin-bottom: 12px;
+  margin-top: 12px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #01234B;
+  font-family: Montserrat;
+}
+.time-zone{
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 400;
+  color: #01234B;
+  line-height: 20px;
+}
+.name-surname {
+  font-size: 34px;
+  color: #01234B;
+  font-weight: 500;
+  line-height: 40px;
+  line-height: 40px;
+}
+
+.city {
+  // position: relative;
+  padding-right: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #535353;
+}
+
+.location-content {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #01234B;
+}
+
+// .location {
+//   height: 56px;
+//   border-radius: 8px;
+//   padding: 0 10 px;
+//   margin: auto;
+//   display: flex;
+//   border: 1px solid #4CB147;
+//   background-color: #f2faf2;
+// }
+
+.location-icon {
+  // font-size: 12px;
+  color: #4CB147;
+}
+
+.location-square {
+  font-size: 10px;
+}
+
+.text-header {
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+  margin-right: 20px;
+  color: #01234B;
+  padding-bottom: 18px;
+
+  &.text-header-bottom-line {
+    border-bottom: 2px solid #01234B;
+  }
+}
+
+.head {
+  font-size: 20px;
+  line-height: 32px;
+  font-weight: 600;
+  color: #01234B;
+}
+
+.head-ege {
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.text-experience {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.street {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.number {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.text {
+  font-size: 16px;
+  line-height: 24px;
+  color: #01234B;
+}
+
+.txt-light {
+  font-size: 14px;
+  line-height: 20px;
+  color: #848B98;
+}
+
+.accordion-body {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.text-kanal {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+
+
+.randevu {
+  width: 183px;
+  height: 80px;
+}
+
+@media screen and (max-width: 576px) {
+  .profile-image-main {
+    height: 82px !important;
+    width: 82px !important;
+    background-size: cover;
+    border-radius: 50%;
+    background-position: center top;
+  }
+  .doc-profession-button{
+    font-size: 16px;
+  }
+  .randevu-title{
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+  .time-zone{
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+
+  #takeAppointmentModal {
+    .modal-dialog {
+      margin: 0;
+      height: 100%;
+    }
+  }
+  #successModal {
+    .modal-dialog {
+      margin: 0;
+      height: 100%;
+    }
+  }
+  #randevuModal {
+    .modal-dialog {
+      margin: 0;
+      height: 100%;
+    }
+  }
+  .image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .doc-profession {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .doc-profession-modal {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+
+  .name-surname {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .head {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .head-ege {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+
+  .text-experience {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: bold;
+  }
+
+  .street {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .text-kanal {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .text-faq {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .randevu {
+    width: 160px;
+    height: 48px;
+    border: 1px solid #4CB147;
+    border-radius: 8px;
+
+  }
+
+  .accordion-button {
+    font-size: 14px !important;
+    line-height: 16.8px;
+  }
+
+  .accordion-body {
+    font-size: 14px;
+    line-height: 19.6px;
+    color: rgba(60, 60, 67, 0.85);
+    font-family: 'HK Grotesk';
+  }
+
+  .text-nowrap {
+    font-size: 14px;
+  }
+
+  .location-content {
+    font-size: 14px;
+  }
+}
