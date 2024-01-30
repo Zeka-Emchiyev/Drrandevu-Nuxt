@@ -1,9 +1,9 @@
 <template>
-    <div  class="app">
-<!--        <Header />-->
-        <Nuxt />
-        <Footer />
-    </div>
+  <div class="app">
+    <NavbarDoctor />
+    <Nuxt />
+    <Footer />
+  </div>
 </template>
 <style>
 /*.app{*/
