@@ -3,11 +3,11 @@
         <div class="row align-items-center justify-content-between    mb-2">
 
             <div class="col-md-7 col-lg-8 mt-3">
-                <!-- <img src="../assets/24px.png" alt="" class="img me-3 pb-2"> -->
-                <!-- <router-link to="/" class="text-decoration-none">
+<!--                 <img src="../assets/24px.png" alt="" class="img me-3 pb-2">-->
+                 <nuxt-link to="/" class="text-decoration-none">
                     <span class="text animate__animated animate__bounce animate__flash">Doct</span>
                     <span class="text-online animate__animated animate__bounce animate__flash">Online</span>
-                </router-link> -->
+                </nuxt-link>
             </div>
 
             <div class="d-none d-md-block col-md-5 col-lg-4 mt-3">

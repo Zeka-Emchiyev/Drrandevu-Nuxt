@@ -13,13 +13,16 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat&display=swap"'}
+
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    'bootstrap-icons/font/bootstrap-icons.css'
+    'bootstrap-icons/font/bootstrap-icons.css',
+    'assets/styles.scss',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -30,6 +33,9 @@ export default {
     },
     '~/plugins/axios',
     '~/plugins/pagination.js',
+
+    { src: '~/plugins/vue-carousel.js', mode: 'client' }
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -38,7 +44,8 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     'vue-ssr-carousel/nuxt',
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
+    '@nuxtjs/google-fonts',
     ],
   moment: {
     /* module options */

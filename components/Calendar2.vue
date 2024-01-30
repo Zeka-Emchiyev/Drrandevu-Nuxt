@@ -82,7 +82,6 @@ export default {
     methods: {
         generateDays() {
             const worksOnSaturday = !!this.doctor.saturdayStatus
-          console.log(this.doctor, 'generateDays', this.selectedDoctor)
             const addDayCount = 1;
             let tomorrow = moment().add(addDayCount, 'days');
             let nextTwoDay = moment().add(addDayCount + 1, 'days');
