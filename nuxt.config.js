@@ -24,15 +24,6 @@ export default {
     'bootstrap-icons/font/bootstrap-icons.css',
     'assets/styles.scss',
   ],
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@use "~/assets/_styles.scss" as *;'
-        }
-      }
-    }
-  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
