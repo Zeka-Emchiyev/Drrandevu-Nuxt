@@ -141,7 +141,7 @@
             <div class="container align-items-center justify-content-center my-4 pt-md-3">
               <div class="row">
                 <div class="col-3 col-md-2">
-                  <div class="profile-image rounded"
+                  <div class="profile-image-modal rounded"
                        :style="{'background-image': 'url(' + `http://159.223.22.111/${selectedDoctor.profile_photo}` + ')'}">
                   </div>
                 </div>
@@ -310,10 +310,7 @@ export default {
       backdrop: 'static',
       keyboard: false
     })
-    this.successModal = new bootstrap.Modal(document.getElementById('successModal'), {
-      backdrop: 'static',
-      keyboard: false
-    })
+    this.successModal = new bootstrap.Modal(document.getElementById('successModal'))
   },
   async asyncData({$axios, query}) {
     const apiUrl = process.env.API_URL

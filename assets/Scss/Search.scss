@@ -219,6 +219,12 @@
 // }
 
 .profile-image {
+  width: 104px;
+  height: 104px;
+  background-size: cover;
+  background-position: center top;
+}
+.profile-image-modal{
   width: 70px;
   height: 80px;
   background-size: cover;
