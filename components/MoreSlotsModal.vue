@@ -12,7 +12,7 @@
                         <div v-if="doctor" class="row">
                             <div class="col-3">
                                 <div class="rounded-circle border profile-image"
-                                     :style="{'background-image': 'url(' + `http://159.223.22.111/${doctor.profile_photo}` + ')'}">
+                                     :style="{'background-image': 'url(' + $config.apiUrl + '/'+ doctor.profile_photo + ')'}">
                                 </div>
                                 <router-link class="text-decoration-none profile-link" @click.native="closeModal"
                                              :to="{ name: 'doctor', params: { slug: doctor.slug } }">
@@ -33,9 +33,9 @@
                     </div>
 
                     <div class="d-flex flex-column days-container justify-content-end px-4 mt-3">
-                        <div v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')" class="w-100 mb-2">
+                        <div v-for="day in monthlyDates" :key="$moment(day.date).format('MMM DD')" class="w-100 mb-2">
                             <div>
-                                {{ moment(day.date).format('dddd, DD MMMM') }}
+                                {{ $moment(day.date).format('dddd, DD MMMM') }}
                                 <div class="time-slots mt-2 d-flex flex-wrap">
                                     <div v-for="timeSlot in day.timeSlots">
                                         <div class="time-slot"
@@ -55,8 +55,6 @@
 </template>
 
 <script>
-import 'moment/locale/az';
-import moment from 'moment'
 import {isSunday, isWeekend} from "@/helper/util";
 
 export default {
@@ -74,7 +72,7 @@ export default {
   },
   data() {
     return {
-      selectedDay: null,//moment().toDate().toISOString(),
+      selectedDay: null,//$moment().toDate().toISOString(),
       selectedTime: '',
       selectedHeader: 'location',
       selectedBox: 'clinic',
@@ -82,7 +80,6 @@ export default {
       timeSlots: [],
       appointmentDate: null,
       selectedDate: null,
-      moment,
       result: '',
       appointmentModal: null
     };
@@ -110,7 +107,6 @@ export default {
   methods: {
     showModal() {
       this.showMoreModalInput.show();
-      this.moment.locale('az')
       this.user();
       this.generateDays();
     },
@@ -120,18 +116,18 @@ export default {
     generateDays() {
       const worksOnSaturday = !!this.doctor.saturdayStatus
       const addDayCount = 1;
-      let tomorrow = moment().add(1, 'days');
-      let monthLater = moment().add(1, 'month');
+      let tomorrow = this.$moment().add(1, 'days');
+      let monthLater = this.$moment().add(1, 'month');
 
       if (worksOnSaturday) {
         if (isSunday(tomorrow)) {
-          tomorrow = moment().add(addDayCount + 1, 'days');
+          tomorrow = this.$moment().add(addDayCount + 1, 'days');
         }
       }
       // Hekim 6ci gun ishleyirse
       else {
         if (isWeekend(tomorrow)) {
-          tomorrow = moment().add(addDayCount + 2, 'days');
+          tomorrow = this.$moment().add(addDayCount + 2, 'days');
         }
       }
       let enumerateDaysBetweenDates = (startDate, endDate) => {
@@ -172,8 +168,8 @@ export default {
     },
     generateTimeSlots() {
         this.timeSlots = []
-      const startTime = moment(this.doctor.start_time, "HH:mm")
-      const endTime = moment(this.doctor.end_time, "HH:mm")
+      const startTime = this.$moment(this.doctor.start_time, "HH:mm")
+      const endTime = this.$moment(this.doctor.end_time, "HH:mm")
       const diffInMinutes = endTime.diff(startTime, 'minutes')
       const slotMinute = 30
       for (let i = 0;i <= diffInMinutes;i += slotMinute) {

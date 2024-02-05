@@ -58,6 +58,9 @@ export default {
   env: {
     API_URL: process.env.API_URL || 'https://admin.drrandevu.az'
   },
+  publicRuntimeConfig: {
+    apiUrl: process.env.API_URL || 'https://admin.drrandevu.az'
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   // Build Configuration: https://go.nuxtjs.dev/config-build
   modules: [

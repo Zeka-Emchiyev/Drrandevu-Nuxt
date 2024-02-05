@@ -1,12 +1,11 @@
 <template>
   <div>
-<!--    <NavbarDoctor></NavbarDoctor>-->
     <div class="container">
       <div class="row">
         <div class="col-md-7">
           <div class="row">
             <div class="col-3 col-sm-4 col-md-5 col-lg-4 col-xl-3 ">
-              <div class="profile-image-main" :style="{'background-image': 'url(' + `http://159.223.22.111/${doctor.profile_photo}` + ')'}"></div>
+              <div class="profile-image-main" :style="{'background-image': 'url(' + $config.apiUrl + '/'+ doctor.profile_photo + ')'}"></div>
             </div>
 
             <div class="col-9 col-sm-8 col-md-7 col-lg-8 col-xl-9 ">
@@ -296,7 +295,7 @@
               <div class="container align-items-center justify-content-center my-5 ">
                   <div class="d-flex gap-3">
                       <div class="">
-                          <div class="profile-image rounded" :style="{'background-image': 'url(' + `http://159.223.22.111/${doctor.profile_photo}` + ')'}">
+                          <div class="profile-image rounded" :style="{'background-image': 'url(' +$config.apiUrl + '/'+ doctor.profile_photo + ')'}">
                           </div>
                       </div>
                       <div class="">
@@ -341,7 +340,7 @@
             <div class="modal-body mt-4">
                     <div class="d-flex gap-3">
                         <div class="">
-                            <div class="profile-image rounded" :style="{'background-image': 'url(' + `http://159.223.22.111/${doctor.profile_photo}` + ')'}">
+                            <div class="profile-image rounded" :style="{'background-image': 'url(' + $config.apiUrl + '/'+ doctor.profile_photo + ')'}">
                             </div>
                         </div>
                         <div class="">
@@ -447,9 +446,8 @@ export default {
         if (is_valid) {
             this.form.doctor_id = this.doctor.id
             this.form.date = this.$moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
-            this.form.time = this.selectedTime
-            const apiUrl = process.env.API_URL
-            this.$axios.post(apiUrl + "/api-appointments/create", this.form)
+            this.form.time = this.selectedTime;
+            this.$axios.post(this.$config.apiUrl + "/api-appointments/create", this.form)
                 .then((resp) => {
                     console.log(resp)
                     this.result = resp.data
@@ -510,7 +508,7 @@ export default {
     setSelectedTime(day, time) {
       this.setDay(day)
       this.selectedTime = time.timeFormatted
-      console.log(this.selectedDay)
+      // console.log(this.selectedDay)
     },
     showMoreTimeSlots(day, showState = true) {
       const dayIndex = this.monthlyDates.findIndex(date => date.id === day.id)

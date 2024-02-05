@@ -86,8 +86,10 @@
           <div class="col-md-8">
             <div class="row mt-4">
               <div class="col-3 col-lg-2">
-                <div :style="{'background-image': 'url(' + `http://159.223.22.111/${doctor.profile_photo}` + ')'}"
-                     class="rounded-circle border profile-image">
+                <div
+                  class="rounded-circle border profile-image"
+                  :style="{ 'background-image': 'url(' + $config.apiUrl + '/' + doctor.profile_photo + ')' }"
+                >
                 </div>
                 <nuxt-link class="text-decoration-none profile-link" :to="{ name: 'doctor-slug', params: { slug: doctor.slug } }">
                   Profilə bax
@@ -142,12 +144,12 @@
               <div class="row">
                 <div class="col-3 col-md-2">
                   <div class="profile-image-modal rounded"
-                       :style="{'background-image': 'url(' + `http://159.223.22.111/${selectedDoctor.profile_photo}` + ')'}">
+                       :style="{'background-image':'url(' + $config.apiUrl + '/' + selectedDoctor.profile_photo + ')'}">
                   </div>
                 </div>
                 <div class="col-9 col-md-10">
                   <h6 class="fullname">{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
-                  <p  class="time-zone"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
+                  <p  class="time-zone"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
                   <p>{{ selectedDoctor.clinic }}</p>
                 </div>
 
@@ -183,12 +185,12 @@
           <div class="modal-body mt-4">
             <div class="d-flex gap-3">
               <div class="">
-                <div class="profile-image rounded" :style="{'background-image': 'url(' + `http://159.223.22.111/${selectedDoctor.profile_photo}` + ')'}">
+                <div class="profile-image rounded" :style="{'background-image':'url(' + $config.apiUrl + '/' + selectedDoctor.profile_photo + ')'}">
                 </div>
               </div>
               <div class="">
                 <h6 class="fullname">{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
-                <div class="time-zone mb-2"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
+                <div class="time-zone mb-2"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
                 <div class="doctor-clinic">{{ selectedDoctor.clinic }}</div>
               </div>
             </div>
@@ -207,8 +209,7 @@
 
 <script>
 import Pagination from 'vue-pagination-2';
-import 'moment/locale/az';
-import moment from 'moment'
+
 
 
 export default {
@@ -226,9 +227,10 @@ export default {
       searchClinic: '',
       selectedClinic: '',
       regionsDoctors: null,
-      selectedDay: null,//moment().toDate().toISOString(),
+      selectedDay: null,//$moment().toDate().toISOString(),
       selectedTime: '',
       filteredObjects: [],
+      hasSelectedTime: false,
 
       form: {
         date: null,
@@ -247,7 +249,6 @@ export default {
       selectedDoctor: {},
       appointmentDate: null,
       selectedDate: null,
-      moment,
       result: '',
       itemsPerPage: 10,
       currentPage: 1,
@@ -329,7 +330,7 @@ export default {
       professions: profession.data,
       regions: region.data,
       clinics: clinic.data,
-      doctors: data
+      doctors: data,
     }
   },
   methods: {
@@ -375,8 +376,12 @@ export default {
       console.log('time')
     },
     showSelectedAppointmentModal(data) {
+      if (this.hasSelectedTime) {
+        alert(this.result.message)
+        return;
+      }
       this.selectedDoctor = data.doctor
-      this.selectedDate = data.time
+      this.selectedTime = data.time
       this.selectedDay = data.date
       this.myModal.show()
       // console.log(data)
@@ -389,21 +394,28 @@ export default {
       return Object.values(this.formValidation).every((v) => v)
     },
     createAppointment() {
-      let is_valid = this.formValidationClass()
-      if (is_valid){
-        this.form.doctor_id = this.selectedDoctor.id
-        this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
-        this.form.time = this.selectedTime
-        this.$axios.post('http://159.223.22.111' + "/api-appointments/create", this.form)
+      let is_valid = this.formValidationClass();
+      if (is_valid) {
+        this.form.doctor_id = this.selectedDoctor.id;
+        this.form.date = this.$moment(this.selectedDay).format('YYYY-MM-DD HH:mm');
+        this.form.time = this.selectedTime;
+
+        this.$axios
+          .post(this.$config.apiUrl + '/api-appointments/create', this.form)
           .then((resp) => {
-            console.log(resp)
-            this.result = resp.data
-            this.myModal.hide()
-            this.successModal.show()
+            this.result = resp.data;
+            this.myModal.hide();
+            this.successModal.show();
+            if (this.result) {
+              this.hasSelectedTime = true; // Mark that time has been selected
+              console.log(this.selectedTime, 'select');
+              // You may return this.selectedTime here if needed
+            }
           })
-          .catch(e => console.log(e))
-        this.form.fullname = ''
-        this.form.phone = ''
+          .catch((e) => console.log(e));
+
+        this.form.fullname = '';
+        this.form.phone = '';
       }
     },
 
