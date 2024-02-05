@@ -2,10 +2,10 @@
     <div class="">
         <div class="d-flex justify-content-between mt-3">
             <div class="d-flex flex-column days-container justify-content-end">
-                <div v-for="day in nextTwoDays" :key="moment(day.date).format('MMM DD')" class="w-100 mb-2">
+                <div v-for="day in nextTwoDays" :key="$moment(day.date).format('MMM DD')" class="w-100 mb-2">
                     <div>
                         <div class="day-date mb-2">
-                            {{ moment(day.date).format('dddd, DD MMMM') }}
+                            {{ $moment(day.date).format('dddd, DD MMMM') }}
                         </div>
                         <div class="time-slots mt-2 d-flex flex-wrap justify-content-between">
                             <div v-for="(timeSlot, index) in day.timeSlots">
@@ -30,8 +30,7 @@
 </template>
 
 <script>
-import 'moment/locale/az';
-import moment from 'moment'
+
 import {isSunday, isWeekend} from "@/helper/util";
 
 export default {
@@ -53,7 +52,7 @@ export default {
     },
     data() {
         return {
-            selectedDay: null,//moment().toDate().toISOString(),
+            selectedDay: null,//$moment().toDate().toISOString(),
             selectedTime: '',
             selectedHeader: 'location',
             selectedBox: 'clinic',
@@ -61,7 +60,6 @@ export default {
             timeSlots: [],
             appointmentDate: null,
             selectedDate: null,
-            moment,
             result: '',
             appointmentModal: null,
             showMoreModalInput: null,
@@ -74,7 +72,6 @@ export default {
         }
     },
     mounted() {
-        this.moment.locale('az')
         this.user()
         this.generateDays()
     },
@@ -83,26 +80,26 @@ export default {
         generateDays() {
             const worksOnSaturday = !!this.doctor.saturdayStatus
             const addDayCount = 1;
-            let tomorrow = moment().add(addDayCount, 'days');
-            let nextTwoDay = moment().add(addDayCount + 1, 'days');
+            let tomorrow = this.$moment().add(addDayCount, 'days');
+            let nextTwoDay = this.$moment().add(addDayCount + 1, 'days');
             // Hekim 6ci gun ishleyirse - ancaq bazar gun olan gunleri bypass etmek.
             if (worksOnSaturday) {
               if (isSunday(tomorrow)) {
-                tomorrow = moment().add(addDayCount + 1, 'days');
-                nextTwoDay = moment().add(addDayCount + 2, 'days');
+                tomorrow = this.$moment().add(addDayCount + 1, 'days');
+                nextTwoDay = this.$moment().add(addDayCount + 2, 'days');
               }
               if (isSunday(nextTwoDay)) {
-                nextTwoDay = moment().add(addDayCount + 2, 'days');
+                nextTwoDay = this.$moment().add(addDayCount + 2, 'days');
               }
             }
             // Hekim 6ci gun ishleyirse - 6 ve bazari bypass etmek.
             else {
               if (isWeekend(tomorrow)) {
-                tomorrow = moment().add(addDayCount + 2, 'days');
-                nextTwoDay = moment().add(addDayCount + 3, 'days');
+                tomorrow = this.$moment().add(addDayCount + 2, 'days');
+                nextTwoDay = this.$moment().add(addDayCount + 3, 'days');
               }
               if (isWeekend(nextTwoDay)) {
-                nextTwoDay = moment().add(addDayCount + 3, 'days');
+                nextTwoDay = this.$moment().add(addDayCount + 3, 'days');
               }
             }
             let enumerateDaysBetweenDates = (startDate, endDate) => {
@@ -148,8 +145,8 @@ export default {
             this.nextTwoDays = enumerateDaysBetweenDates(tomorrow, nextTwoDay)
         },
         generateTimeSlots() {
-            const startTime = moment(this.doctor.start_time, "HH:mm")
-            const endTime = moment(this.doctor.end_time, "HH:mm")
+            const startTime = this.$moment(this.doctor.start_time, "HH:mm")
+            const endTime = this.$moment(this.doctor.end_time, "HH:mm")
             const diffInMinutes = endTime.diff(startTime, 'minutes')
             const slotMinute = 30
             for (let i = 0;i <= diffInMinutes;i += slotMinute) {

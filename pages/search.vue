@@ -147,7 +147,7 @@
                 </div>
                 <div class="col-9 col-md-10">
                   <h6 class="fullname">{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
-                  <p  class="time-zone"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
+                  <p  class="time-zone"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
                   <p>{{ selectedDoctor.clinic }}</p>
                 </div>
 
@@ -188,7 +188,7 @@
               </div>
               <div class="">
                 <h6 class="fullname">{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
-                <div class="time-zone mb-2"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
+                <div class="time-zone mb-2"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
                 <div class="doctor-clinic">{{ selectedDoctor.clinic }}</div>
               </div>
             </div>
@@ -207,8 +207,7 @@
 
 <script>
 import Pagination from 'vue-pagination-2';
-import 'moment/locale/az';
-import moment from 'moment'
+
 
 
 export default {
@@ -226,9 +225,10 @@ export default {
       searchClinic: '',
       selectedClinic: '',
       regionsDoctors: null,
-      selectedDay: null,//moment().toDate().toISOString(),
+      selectedDay: null,//$moment().toDate().toISOString(),
       selectedTime: '',
       filteredObjects: [],
+      hasSelectedTime: false,
 
       form: {
         date: null,
@@ -247,7 +247,6 @@ export default {
       selectedDoctor: {},
       appointmentDate: null,
       selectedDate: null,
-      moment,
       result: '',
       itemsPerPage: 10,
       currentPage: 1,
@@ -375,8 +374,12 @@ export default {
       console.log('time')
     },
     showSelectedAppointmentModal(data) {
+      if (this.hasSelectedTime) {
+        alert(this.result.message)
+        return;
+      }
       this.selectedDoctor = data.doctor
-      this.selectedDate = data.time
+      this.selectedTime = data.time
       this.selectedDay = data.date
       this.myModal.show()
       // console.log(data)
@@ -389,21 +392,28 @@ export default {
       return Object.values(this.formValidation).every((v) => v)
     },
     createAppointment() {
-      let is_valid = this.formValidationClass()
-      if (is_valid){
-        this.form.doctor_id = this.selectedDoctor.id
-        this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
-        this.form.time = this.selectedTime
-        this.$axios.post('http://159.223.22.111' + "/api-appointments/create", this.form)
+      let is_valid = this.formValidationClass();
+      if (is_valid) {
+        this.form.doctor_id = this.selectedDoctor.id;
+        this.form.date = this.$moment(this.selectedDay).format('YYYY-MM-DD HH:mm');
+        this.form.time = this.selectedTime;
+
+        this.$axios
+          .post('http://159.223.22.111' + '/api-appointments/create', this.form)
           .then((resp) => {
-            console.log(resp)
-            this.result = resp.data
-            this.myModal.hide()
-            this.successModal.show()
+            this.result = resp.data;
+            this.myModal.hide();
+            this.successModal.show();
+            if (this.result) {
+              this.hasSelectedTime = true; // Mark that time has been selected
+              console.log(this.selectedTime, 'select');
+              // You may return this.selectedTime here if needed
+            }
           })
-          .catch(e => console.log(e))
-        this.form.fullname = ''
-        this.form.phone = ''
+          .catch((e) => console.log(e));
+
+        this.form.fullname = '';
+        this.form.phone = '';
       }
     },
 
