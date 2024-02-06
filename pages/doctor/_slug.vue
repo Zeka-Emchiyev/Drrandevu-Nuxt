@@ -411,7 +411,7 @@ export default {
   async fetch() {
     try {
       const doctorId = this.$route.params.slug.split('-').slice(-1)[0];
-      const response = await this.$axios.get("/api-doctors?doctor-id=" + doctorId);
+      const response = await this.$axios.get(this.$config.apiUrl + "/api-doctors?doctor-id=" + doctorId);
       this.doctor = response.data;
       this.generateTimeSlots()
       this.generateDays()
