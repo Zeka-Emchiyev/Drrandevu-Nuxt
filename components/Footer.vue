@@ -8,9 +8,9 @@
                 <div class="row mt-3">
                     <!-- Grid column  col-lg-4 col-xl-3 -->
                     <div class="col-md-1  mx-auto mb-4">
-                        <div>
+                        <nuxt-link to="/">
                             <img src="../assets/Logo 1.png" alt="">
-                        </div>
+                        </nuxt-link>
                     </div>
 
                     <!-- Grid column -->
@@ -85,16 +85,25 @@ export default {
     methods: {
       async fetchProfessions() {
         try {
-          const apiUrl = process.env.API_URL;
-          const resProfessions = await this.$axios.$get(apiUrl + "/api-professions");
+          const resProfessions = await this.$axios.$get(this.$config.apiUrl + "/api-professions");
           this.professions = resProfessions;
+          console.log(this.professions)
         } catch (error) {
           console.error('Error fetching professions:', error);
         }
       },
         getDoctorsForProfession(professionId) {
-            this.$router.push({ path: '/search', query: { 'prof-id': professionId, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
-            window.location.reload()
+          const queryParams = {
+            'prof-id': professionId,
+          };
+          const queryString = Object.keys(queryParams).map(key => key + '=' + queryParams[key]).join('&');
+          if(window.location.pathname !== '/search'){
+            const newUrl = window.location.pathname + 'search?' + queryString;
+            window.location.href = newUrl;
+          }else if(window.location.pathname === '/search'){
+            const newUrl = window.location.pathname + '?' + queryString;
+            window.location.href = newUrl;
+          }
         },
 
 

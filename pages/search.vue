@@ -213,6 +213,18 @@ import Pagination from 'vue-pagination-2';
 
 
 export default {
+  head() {
+    return {
+      title: 'Həkim axtarışı',
+      meta: [
+        {
+          hid: 'description',
+          name: this.doctors[0].profession,
+          content: 'Digər axtarışı edin'
+        }
+      ],
+    }
+  },
   name: 'Search',
   layout:'default',
   components: {

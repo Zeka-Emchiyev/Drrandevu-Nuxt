@@ -368,6 +368,18 @@ import NavbarDoctor from "@/components/NavbarDoctor.vue";
 import Calendar2 from "@/components/Calendar2.vue";
 import MoreSlotsModal from "@/components/MoreSlotsModal.vue";
 export default {
+  head() {
+    return {
+      title: 'Həkim profili',
+      meta: [
+        {
+          hid: 'description',
+          name: this.doctor.fullname,
+          content: this.doctor.profession
+        }
+      ],
+    }
+  },
   name: 'slug',
   layout:'doctor',
   components: {MoreSlotsModal, Calendar2, FaqHolder, NavbarDoctor,  },
@@ -411,7 +423,7 @@ export default {
   async fetch() {
     try {
       const doctorId = this.$route.params.slug.split('-').slice(-1)[0];
-      const response = await this.$axios.get("/api-doctors?doctor-id=" + doctorId);
+      const response = await this.$axios.get(this.$config.apiUrl + "/api-doctors?doctor-id=" + doctorId);
       this.doctor = response.data;
       this.generateTimeSlots()
       this.generateDays()
