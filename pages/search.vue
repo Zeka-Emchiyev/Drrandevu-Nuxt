@@ -330,7 +330,7 @@ export default {
       professions: profession.data,
       regions: region.data,
       clinics: clinic.data,
-      doctors: data,
+      doctors: data
     }
   },
   methods: {
