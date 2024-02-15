@@ -87,24 +87,25 @@ export default {
         try {
           const resProfessions = await this.$axios.$get(this.$config.apiUrl + "/api-professions");
           this.professions = resProfessions;
-          console.log(this.professions)
         } catch (error) {
           console.error('Error fetching professions:', error);
         }
       },
-        getDoctorsForProfession(professionId) {
-          const queryParams = {
-            'prof-id': professionId,
-          };
-          const queryString = Object.keys(queryParams).map(key => key + '=' + queryParams[key]).join('&');
-          if(window.location.pathname !== '/search'){
-            const newUrl = window.location.pathname + 'search?' + queryString;
-            window.location.href = newUrl;
-          }else if(window.location.pathname === '/search'){
-            const newUrl = window.location.pathname + '?' + queryString;
-            window.location.href = newUrl;
-          }
-        },
+      getDoctorsForProfession(professionId) {
+        const queryParams = {
+          'prof-id': professionId,
+        };
+
+        const queryString = Object.keys(queryParams).map(key => key + '=' + queryParams[key]).join('&');
+
+        const baseUrl = process.env.BASE_URL || '/';
+        const newPath = 'search';
+
+        const newUrl = baseUrl.endsWith('/') ? baseUrl + newPath + '?' + queryString : baseUrl + '/' + newPath + '?' + queryString;
+
+        window.location.href = newUrl;
+      },
+
 
 
     },

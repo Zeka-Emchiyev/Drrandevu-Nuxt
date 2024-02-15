@@ -164,10 +164,6 @@
             <p class="txt-light">Konqresslər</p>
             <p class="text">{{ doctor.congress }}</p>
 
-            <div>
-              <h2 class="mb-4 head">Xəritə</h2>
-<!--              <GoogleMapLoader />-->
-            </div>
 
             <FaqHolder id="scrollspyHeading5" />
           </div>

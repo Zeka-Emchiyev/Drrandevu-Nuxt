@@ -146,7 +146,6 @@ export default {
 
     setDay(day) {
       this.selectedDay = day.date
-      console.log(day.date)
     },
     setSelectedTime(day, time) {
 

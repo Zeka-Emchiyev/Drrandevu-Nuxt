@@ -132,14 +132,14 @@
                   </div>
                 </div>
 
-                <div class="input-holder dropdown">
-                  <span class="span-line"></span>
-                  <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
+<!--                <div class="input-holder dropdown">-->
+<!--                  <span class="span-line"></span>-->
+<!--                  <i class="bi bi-geo-alt-fill icon-location ms-2"></i>-->
 
-                  <input v-model="searchRegion" class="icon dropdown-toggle form-control border-0 input-location"
-                    type="text" placeholder="Rayonlar" data-bs-toggle="modal" data-bs-target="#regionsModal" >
+<!--                  <input v-model="searchRegion" class="icon dropdown-toggle form-control border-0 input-location"-->
+<!--                    type="text" placeholder="Rayonlar" data-bs-toggle="modal" data-bs-target="#regionsModal" >-->
 
-                </div>
+<!--                </div>-->
 
 
                 <!-- Modal Regions-->
@@ -169,13 +169,13 @@
                   </div>
                 </div>
 
-                <div class="input-holder dropdown">
-                  <span class="span-line"></span>
-                  <i class="bi bi-shield-check icon-insurance ms-2"></i>
+<!--                <div class="input-holder dropdown">-->
+<!--                  <span class="span-line"></span>-->
+<!--                  <i class="bi bi-shield-check icon-insurance ms-2"></i>-->
 
-                  <input v-model="searchClinic" class="icon dropdown-toggle form-control border-0 input-insurance"
-                    type="text" placeholder="Klinikalar" data-bs-toggle="modal" data-bs-target="#clinicsModal" >
-                </div>
+<!--                  <input v-model="searchClinic" class="icon dropdown-toggle form-control border-0 input-insurance"-->
+<!--                    type="text" placeholder="Klinikalar" data-bs-toggle="modal" data-bs-target="#clinicsModal" >-->
+<!--                </div>-->
 
                 <button @click="searchProfessions()" class="icon-button btn btn-success rounded-start">
                   <span class="d-block d-md-none" style="color: #01234B;">Axtar</span>

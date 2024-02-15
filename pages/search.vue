@@ -352,7 +352,6 @@ export default {
     },
     showMoreSlotsForDoctor(doctor) {
       this.moreSlotsDoctor = doctor;
-      console.log(doctor, 'search page')
       this.showMoreSlotsModal = true;
     },
     selectProfession(selected) {
@@ -420,7 +419,7 @@ export default {
             this.successModal.show();
             if (this.result) {
               this.hasSelectedTime = true; // Mark that time has been selected
-              console.log(this.selectedTime, 'select');
+              // console.log(this.selectedTime, 'select');
               // You may return this.selectedTime here if needed
             }
           })
