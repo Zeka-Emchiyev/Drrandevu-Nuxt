@@ -92,18 +92,9 @@ export default {
         }
       },
       getDoctorsForProfession(professionId) {
-        const queryParams = {
-          'prof-id': professionId,
-        };
-
-        const queryString = Object.keys(queryParams).map(key => key + '=' + queryParams[key]).join('&');
-
-        const baseUrl = process.env.BASE_URL || '/';
-        const newPath = 'search';
-
-        const newUrl = baseUrl.endsWith('/') ? baseUrl + newPath + '?' + queryString : baseUrl + '/' + newPath + '?' + queryString;
-
-        window.location.href = newUrl;
+        this.$nuxt.$router.push({path: '/search', query:{
+          'prof-id':professionId
+          }})
       },
 
 
