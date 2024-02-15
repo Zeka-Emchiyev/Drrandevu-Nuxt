@@ -9,13 +9,11 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { hid: 'dr:description', name: 'description', content: 'Drrandevu' },
+      { name: 'format-detection', content: 'hekim axtar, randevu al, randevu gotur, hekim qebulu, həkim qəbulu, hekim tap, həkim, həkimlər, hekimler, Klinika qiymetleri, Online hekim, Kardioloq hekimler, Nevroloq hekimler' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat&display=swap"'}
-
     ]
   },
 
@@ -65,7 +63,6 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   modules: [
     '@nuxtjs/axios',
-    '@nuxt/http',
   ],
 
   axios: {

@@ -238,21 +238,20 @@ import 'assets/Scss/Home.scss'
 import 'assets/Scss/Global.scss'
 
 export default {
+  name: 'Index',
+  layout:'default',
   head() {
     return {
       title: 'Ana səhifə',
       meta: [
         {
-          hid: 'description',
+          hid: 'home:description',
           name: 'description',
           content: 'Sizə uyğun həkim seçin və randevu götürün'
         }
       ],
     }
   },
-  name: 'Index',
-  layout:'default',
-
   data() {
     return {
       selectedProfession: '',

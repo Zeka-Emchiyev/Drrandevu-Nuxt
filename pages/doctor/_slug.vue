@@ -364,18 +364,6 @@ import NavbarDoctor from "@/components/NavbarDoctor.vue";
 import Calendar2 from "@/components/Calendar2.vue";
 import MoreSlotsModal from "@/components/MoreSlotsModal.vue";
 export default {
-  head() {
-    return {
-      title: 'Həkim profili',
-      meta: [
-        {
-          hid: 'description',
-          name: this.doctor.fullname,
-          content: this.doctor.profession
-        }
-      ],
-    }
-  },
   name: 'slug',
   layout:'doctor',
   components: {MoreSlotsModal, Calendar2, FaqHolder, NavbarDoctor,  },
@@ -428,7 +416,18 @@ export default {
       console.error(e);
     }
   },
-
+  head() {
+    return {
+      title: 'Həkim profili',
+      meta: [
+        {
+          hid: 'doctor:description',
+          name: this.doctor.fullname,
+          content: this.doctor.profession
+        }
+      ],
+    }
+  },
 
   methods: {
 
