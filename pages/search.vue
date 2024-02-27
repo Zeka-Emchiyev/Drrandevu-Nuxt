@@ -218,23 +218,6 @@ export default {
   components: {
     Pagination,
   },
-  head() {
-    return {
-      title: 'Həkim axtarışı',
-      meta: [
-        {
-          hid: 'search:description',
-          name: 'description',
-          content: 'Digər axtarışı edin'
-        },
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.doctors[0].profession
-        },
-      ],
-    }
-  },
   data() {
     return {
       selectedProfession: '',
@@ -328,6 +311,7 @@ export default {
       backdrop: 'static',
       keyboard: false
     })
+    console.log(this.doctors)
     this.successModal = new bootstrap.Modal(document.getElementById('successModal'))
   },
   async asyncData({$axios, query}) {
@@ -348,6 +332,23 @@ export default {
       regions: region.data,
       clinics: clinic.data,
       doctors: data
+    }
+  },
+  head({doctors}) {
+    return {
+      title: 'Həkim axtarışı',
+      meta: [
+        {
+          hid: 'search:description',
+          name: 'description',
+          content: 'Digər axtarışı edin'
+        },
+        {
+          hid: 'description',
+          name: 'description',
+          content: doctors[0].profession
+        },
+      ],
     }
   },
   methods: {
