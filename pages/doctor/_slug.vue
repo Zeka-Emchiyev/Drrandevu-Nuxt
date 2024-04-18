@@ -1,10 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <div v-if="setActive">
-        <iframe class="vh-100" src="https://drrandevu.setmore.com/h7r676" scrolling="yes" width="100%" height="100%" frameborder="0"></iframe>
-      </div>
-      <div :class="{'d-none':setActive}" class="row ">
+      <div class="row ">
         <div class="col-md-7">
           <div class="row">
             <div class="col-3 col-sm-4 col-md-5 col-lg-4 col-xl-3 ">
@@ -93,7 +90,10 @@
             </p>
               <div class="d-block d-md-none">
               <div class="randevu-title mb-1">Pulsuz randevu təyin et</div>
-              <div class="container">
+                <div  v-if="doctor.id ===159">
+                  <a class="btn btn-primary col-11 my-3 mx-auto" href="https://drrandevu.setmore.com/h7r676">Randevu al</a>
+                </div>
+              <div :class="{'d-none': doctor.id===159}" class="container">
                   <div class="row">
                       <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
                            :class="{ 'clinic-border': selectedBox === 'clinic' }">
@@ -122,6 +122,7 @@
                               :selected-doctor="doctor"
                               v-if="doctor.id"
                               :buttonLink="buttonLink"
+                              :class="{'d-none': doctor.id===159}"
                               />
 
               </div>
@@ -177,7 +178,9 @@
             <h2 class="randevu-title">Pulsuz randevu təyin et</h2>
 
             <div  v-if="doctor.id ===159">
-              <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>
+              <a class="btn btn-primary col-11 my-3 mx-auto" href="https://drrandevu.setmore.com/h7r676">Randevu al</a>
+
+<!--              <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
             </div>
             <div :class="{'d-none': doctor.id===159}">
             <p class="randevu-type">Randevu tipini seçin</p>
@@ -387,7 +390,6 @@ export default {
       monthlyDates: [],
       timeSlots: [],
       doctor:{},
-      setActive:false,
       form: {
         date: null,
         doctor_id: null,
@@ -442,9 +444,6 @@ export default {
   },
 
   methods: {
-    apointmentActive(){
-      this.setActive = true
-    },
       formValidationClass(){
           this.formValidation = {
               phone: !!this.form.phone,
