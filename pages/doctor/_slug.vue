@@ -93,7 +93,10 @@
             </p>
               <div class="d-block d-md-none">
               <div class="randevu-title mb-1">Pulsuz randevu təyin et</div>
-              <div class="container">
+                <div  v-if="doctor.id ===159">
+                  <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>
+                </div>
+              <div :class="{'d-none': doctor.id===159}" class="container">
                   <div class="row">
                       <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
                            :class="{ 'clinic-border': selectedBox === 'clinic' }">
@@ -122,6 +125,7 @@
                               :selected-doctor="doctor"
                               v-if="doctor.id"
                               :buttonLink="buttonLink"
+                              :class="{'d-none': doctor.id===159}"
                               />
 
               </div>
