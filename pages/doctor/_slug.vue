@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="container">
-      <div class="row">
+      <div v-if="setActive">
+        <iframe class="vh-100" src="https://drrandevu.setmore.com/h7r676" scrolling="yes" width="100%" height="100%" frameborder="0"></iframe>
+      </div>
+      <div :class="{'d-none':setActive}" class="row ">
         <div class="col-md-7">
           <div class="row">
             <div class="col-3 col-sm-4 col-md-5 col-lg-4 col-xl-3 ">
@@ -172,7 +175,14 @@
         <div class="col-md-5 shadow p-3 mb-5 bg-body rounded h-50 d-none d-md-flex  ">
           <div class="container">
             <h2 class="randevu-title">Pulsuz randevu təyin et</h2>
+
+            <div  v-if="doctor.id ===159">
+              <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>
+            </div>
+            <div :class="{'d-none': doctor.id===159}">
             <p class="randevu-type">Randevu tipini seçin</p>
+
+
 
             <!-- <div class="row justify-content-start ms-1">
 
@@ -231,7 +241,7 @@
                 {{ doctor.clinic }}</p>
             </div>
             <div class="d-none d-md-block">
-              <client-only>
+              <client-only >
               <carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
                         navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
                 <slide v-for="day in monthlyDates" :key="$moment(day.date).format('MMM DD')">
@@ -269,6 +279,7 @@
                       :disabled="!dateTimeSelected">
                 Randevu al
               </button>
+            </div>
             </div>
           </div>
         </div>
@@ -376,6 +387,7 @@ export default {
       monthlyDates: [],
       timeSlots: [],
       doctor:{},
+      setActive:false,
       form: {
         date: null,
         doctor_id: null,
@@ -416,21 +428,23 @@ export default {
       console.error(e);
     }
   },
-  head() {
+  head({doctor}) {
     return {
       title: 'Həkim profili',
       meta: [
         {
           hid: 'doctor:description',
-          name: this.doctor.fullname,
-          content: this.doctor.profession
+          name: doctor.fullname,
+          content: doctor.profession
         }
       ],
     }
   },
 
   methods: {
-
+    apointmentActive(){
+      this.setActive = true
+    },
       formValidationClass(){
           this.formValidation = {
               phone: !!this.form.phone,

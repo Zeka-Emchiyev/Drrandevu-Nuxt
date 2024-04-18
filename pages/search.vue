@@ -311,7 +311,7 @@ export default {
       backdrop: 'static',
       keyboard: false
     })
-    console.log(this.doctors)
+    this.bookSlots()
     this.successModal = new bootstrap.Modal(document.getElementById('successModal'))
   },
   async asyncData({$axios, query}) {
@@ -352,6 +352,32 @@ export default {
     }
   },
   methods: {
+    async bookSlots() {
+      try {
+        const apiUrl = 'https://developer.setmore.com/v1';
+        const accessToken = 'r1/9f0a14f0beD4wfzoInBALX4hqiT8uMYre6_pR3KxTQ55c';
+        const payload = {
+          staff_key: 'r8b4e488db3b82a35b6734636146cda0813e523da-d',
+          service_key: '07185a2a-7b11-415b-8d65-22e265b28379',
+          selected_date: '29/11/2023',
+          off_hours: false,
+          double_booking: false,
+          slot_limit: 30,
+        };
+
+        const response = await this.$axios.post(`${apiUrl}/bookingapi/slots`, payload, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        console.log('Booking response:', response.data);
+      } catch (error) {
+        console.error('Error booking slots:', error);
+        // Handle errors as needed
+      }
+    },
     myCallback(page) {
       console.log(this.pagination.page)
       window.scroll(0, 0)

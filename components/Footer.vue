@@ -86,6 +86,8 @@ export default {
       async fetchProfessions() {
         try {
           const resProfessions = await this.$axios.$get(this.$config.apiUrl + "/api-professions");
+          const setMoreApp = await this.$axios.$get(process.env.BASE_URL)
+          console.log(setMoreApp, 'setMore')
           this.professions = resProfessions;
         } catch (error) {
           console.error('Error fetching professions:', error);
