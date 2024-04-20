@@ -8,9 +8,9 @@
                 <div class="row mt-3">
                     <!-- Grid column  col-lg-4 col-xl-3 -->
                     <div class="col-md-1  mx-auto mb-4">
-                        <nuxt-link to="/">
-                            <img src="../assets/Logo 1.png" alt="">
-                        </nuxt-link>
+<!--                        <nuxt-link to="/">-->
+<!--                            <img src="../assets/Logo 1.png" alt="">-->
+<!--                        </nuxt-link>-->
                     </div>
 
                     <!-- Grid column -->
@@ -59,7 +59,7 @@
                         <a class="me-5" href="https://www.instagram.com/"><img src="../assets/instagram.png" alt=""></a>
                     </div>
                     <div class="col-12 col-md-3">
-                        <p class="text-footer">© 2023 Doctonline - Bütün hüquqlar qorunur.</p>
+                        <p class="text-footer">© 2024 DrRandevu - Bütün hüquqlar qorunur.</p>
                     </div>
                 </div>
             </div>
@@ -81,13 +81,14 @@ export default {
     },
     mounted() {
       this.fetchProfessions();
+      console.log('aasdasd')
     },
     methods: {
       async fetchProfessions() {
         try {
           const resProfessions = await this.$axios.$get(this.$config.apiUrl + "/api-professions");
-          const setMoreApp = await this.$axios.$get(process.env.BASE_URL)
-          console.log(setMoreApp, 'setMore')
+          // const setMoreApp = await this.$axios.$get(process.env.BASE_URL)
+          // console.log(setMoreApp, 'setMore')
           this.professions = resProfessions;
         } catch (error) {
           console.error('Error fetching professions:', error);

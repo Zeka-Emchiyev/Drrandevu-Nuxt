@@ -5,7 +5,7 @@
                 <div class="col-md-7 col-lg-8 mt-3">
                     <!-- <img src="../assets/24px.png" alt="" class="img me-3 pb-2"> -->
                     <router-link to="/" class="text-decoration-none">
-                        <span class="text animate__animated animate__bounce animate__flash">DoctOnline</span>
+                        <span class="text animate__animated animate__bounce animate__flash">DrRandevu</span>
                     </router-link>
                 </div>
 

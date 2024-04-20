@@ -11,7 +11,7 @@
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
           data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            Siz saytdan online şəkildə və ya <a href="tel:0514414330">0514414330</a> nömrəsinə zəng etməklə randevu ala
+            Siz saytdan online şəkildə və ya <a href="tel:0508313116">050 831 31 16</a> nömrəsinə zəng etməklə randevu ala
             bilərsiz.
           </div>
         </div>

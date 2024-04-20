@@ -1,9 +1,6 @@
 <template>
   <div>
     <div class="container">
-<!--      <div v-if="setActive">-->
-<!--        <iframe class="vh-100" src="https://drrandevu.setmore.com/h7r676" scrolling="yes" width="100%" height="100%" frameborder="0"></iframe>-->
-<!--      </div>-->
       <div :class="{'d-none':setActive}" class="row ">
         <div class="col-md-7">
           <div class="row">
