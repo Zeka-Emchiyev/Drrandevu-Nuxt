@@ -311,7 +311,7 @@ export default {
       backdrop: 'static',
       keyboard: false
     })
-    this.bookSlots()
+    // this.bookSlots()
     this.successModal = new bootstrap.Modal(document.getElementById('successModal'))
   },
   async asyncData({$axios, query}) {
