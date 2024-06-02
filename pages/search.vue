@@ -11,18 +11,17 @@
           <div class="input-group justify-content-between">
             <div class="input-holder dropdown">
               <i class="bi bi-search icon-search"></i>
-              <input id="dropdownMenuButton1" v-model="searchProfession"
-                     aria-expanded="false" aria-label="First name"
-                     class="icon dropdown-toggle form-control border-0 input-all" data-bs-toggle="dropdown"
-                     placeholder="İxtisaslar" type="text">
+              <input id="dropdownMenuButton1" v-model="searchProfession" aria-expanded="false" aria-label="First name"
+                class="icon dropdown-toggle form-control border-0 input-all" data-bs-toggle="dropdown"
+                placeholder="İxtisaslar" type="text">
 
-              <div aria-labelledby="dropdownMenuButton1"
-                   class="dropdown-menu form-control  border overflow-auto" style="max-height:360px; min-width:280px">
+              <div aria-labelledby="dropdownMenuButton1" class="dropdown-menu form-control  border overflow-auto"
+                style="max-height:360px; min-width:280px">
                 <p class="dropdown-item text-position">İxtisaslar</p>
 
                 <div class="flex-row flex-wrap ">
                   <div v-for="profession in filterProfessions" class="dropdown-item link"
-                       @click="selectProfession(profession)">
+                    @click="selectProfession(profession)">
                     {{ profession.name }}
                   </div>
                 </div>
@@ -32,13 +31,12 @@
             <div class="input-holder dropdown">
               <span class="span-line"></span>
               <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
-              <input id="dropdownMenuButton2" v-model="searchRegion"
-                     aria-expanded="false" aria-label="First name"
-                     class="icon dropdown-toggle form-control border-0 input-location" data-bs-toggle="dropdown"
-                     placeholder="Rayonlar" type="text">
+              <input id="dropdownMenuButton2" v-model="searchRegion" aria-expanded="false" aria-label="First name"
+                class="icon dropdown-toggle form-control border-0 input-location" data-bs-toggle="dropdown"
+                placeholder="Rayonlar" type="text">
 
-              <div aria-labelledby="dropdownMenuButton2"
-                   class="dropdown-menu form-control  border overflow-auto" style="max-height:360px; min-width:280px">
+              <div aria-labelledby="dropdownMenuButton2" class="dropdown-menu form-control  border overflow-auto"
+                style="max-height:360px; min-width:280px">
                 <p class="dropdown-item text-position">Rayonlar</p>
 
                 <div class="flex-row flex-wrap">
@@ -53,18 +51,16 @@
               <span class="span-line"></span>
               <i class="bi bi-shield-check icon-insurance ms-2"></i>
 
-              <input id="dropdownMenuButton3" v-model="searchClinic"
-                     aria-expanded="false" aria-label="First name"
-                     class="icon dropdown-toggle form-control border-0 input-insurance" data-bs-toggle="dropdown"
-                     placeholder="Klinikalar" type="text">
+              <input id="dropdownMenuButton3" v-model="searchClinic" aria-expanded="false" aria-label="First name"
+                class="icon dropdown-toggle form-control border-0 input-insurance" data-bs-toggle="dropdown"
+                placeholder="Klinikalar" type="text">
 
-              <div aria-labelledby="dropdownMenuButton3"
-                   class="dropdown-menu form-control  border overflow-auto" style="max-height:365px; min-width:280px">
+              <div aria-labelledby="dropdownMenuButton3" class="dropdown-menu form-control  border overflow-auto"
+                style="max-height:365px; min-width:280px">
                 <p class="dropdown-item text-position">Klinikalar</p>
 
                 <div class="flex-row flex-wrap">
-                  <div v-for="clinic in filterClinics" class="dropdown-item link"
-                       @click="selectClinic(clinic)">
+                  <div v-for="clinic in filterClinics" class="dropdown-item link" @click="selectClinic(clinic)">
                     {{ clinic.name }}
                   </div>
                 </div>
@@ -72,7 +68,7 @@
             </div>
 
             <button class="icon-button btn btn-success bg-success rounded-start ms-1"
-                    @click="searchProfessions()"></button>
+              @click="searchProfessions()"></button>
 
           </div>
         </div>
@@ -86,12 +82,11 @@
           <div class="col-md-8">
             <div class="row mt-4">
               <div class="col-3 col-lg-2">
-                <div
-                  class="rounded-circle border profile-image"
-                  :style="{ 'background-image': 'url(' + $config.apiUrl + '/' + doctor.profile_photo + ')' }"
-                >
+                <div class="rounded-circle border profile-image"
+                  :style="{ 'background-image': 'url(' + $config.apiUrl + '/' + doctor.profile_photo + ')' }">
                 </div>
-                <nuxt-link class="text-decoration-none profile-link" :to="{ name: 'doctor-slug', params: { slug: doctor.slug } }">
+                <nuxt-link class="text-decoration-none profile-link"
+                  :to="{ name: 'doctor-slug', params: { slug: doctor.slug } }">
                   Profilə bax
                 </nuxt-link>
 
@@ -99,7 +94,7 @@
               <div class="col-9 col-lg-10">
 
                 <Nuxt-link :to="{ name: 'doctor-slug', params: { slug: doctor.slug } }"
-                             class="text-decoration-none rout-link">
+                  class="text-decoration-none rout-link">
                   {{ doctor.fullname }}
                 </Nuxt-link>
                 <span class="text-profession" style="display: block;">{{ doctor.profession }}</span>
@@ -109,29 +104,21 @@
             </div>
           </div>
           <div class="col-md-4">
-            <Calendar2
-              @dateSelected="showSelectedAppointmentModal"
-              :doctor="doctor"
-              :selected-doctor="selectedDoctor"
-              @showMore="showMoreSlotsForDoctor"
-            />
+            <Calendar2 @dateSelected="showSelectedAppointmentModal" :doctor="doctor" :selected-doctor="selectedDoctor"
+              @showMore="showMoreSlotsForDoctor" />
           </div>
         </div>
       </div>
       <div class="d-flex justify-content-center mt-5">
         <pagination v-model="pagination.page" :options="pagination.options" :per-page="pagination.perPage"
-                    :records="doctors.length" class="search-pagination" @paginate="myCallback"/>
+          :records="doctors.length" class="search-pagination" @paginate="myCallback" />
       </div>
     </div>
-    <MoreSlotsModal
-      :show="showMoreSlotsModal"
-      :doctor="moreSlotsDoctor"
-      @closeModal="showMoreSlotsModal = false"
-      @dateSelected="showSelectedAppointmentModal"
-    />
+    <MoreSlotsModal :show="showMoreSlotsModal" :doctor="moreSlotsDoctor" @closeModal="showMoreSlotsModal = false"
+      @dateSelected="showSelectedAppointmentModal" />
     <!-- Modal -->
     <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
-         aria-hidden="hidden">
+      aria-hidden="hidden">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -139,27 +126,29 @@
           </div>
           <div class="modal-body position-relative">
             <button type="button" class="btn-close position-absolute" style="right: 15px; opacity: 0.2;"
-                    data-bs-dismiss="modal" aria-label="Close"></button>
+              data-bs-dismiss="modal" aria-label="Close"></button>
             <div class="container align-items-center justify-content-center my-4 pt-md-3">
               <div class="row">
                 <div class="col-3 col-md-2">
                   <div class="profile-image-modal rounded"
-                       :style="{'background-image':'url(' + $config.apiUrl + '/' + selectedDoctor.profile_photo + ')'}">
+                    :style="{ 'background-image': 'url(' + $config.apiUrl + '/' + selectedDoctor.profile_photo + ')' }">
                   </div>
                 </div>
                 <div class="col-9 col-md-10">
                   <h6 class="fullname">{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
-                  <p  class="time-zone"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
+                  <p class="time-zone"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
                   <p>{{ selectedDoctor.clinic }}</p>
                 </div>
 
                 <div class="col-8">
                   <label class="doc-profession-modal mb-2 mt-2" for="">Ad, Soyad</label>
-                  <input v-model="form.fullname" :class="{'form-control':true, 'input-error': !formValidation.fullname}" type="text" placeholder="Firəngiz Vahabova">
+                  <input v-model="form.fullname" :class="{ 'form-control': true, 'input-error': !formValidation.fullname }"
+                    type="text" placeholder="Firəngiz Vahabova">
                 </div>
                 <div class="mb-1 col-8 mt-2 doc-profession-modal">
                   <label class="mb-2 " for="">Mobil nömrə</label>
-                  <input v-model="form.phone" :class="{'form-control':true, 'input-error': !formValidation.phone}" type="number" placeholder="0501234567">
+                  <input v-model="form.phone" :class="{ 'form-control': true, 'input-error': !formValidation.phone }"
+                    type="number" placeholder="0501234567">
                 </div>
               </div>
               <button type="button" class="col-12 btn btn-primary mt-5" @click="createAppointment">
@@ -178,19 +167,21 @@
       <div class="modal-dialog">
         <div class="modal-content h-100">
           <div class="modal-header">
-            <nuxt-link to="/" class="text-decoration-none" >
+            <nuxt-link to="/" class="text-decoration-none">
               <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel" data-bs-dismiss="modal">Doctonline</h5>
             </nuxt-link>
           </div>
           <div class="modal-body mt-4">
             <div class="d-flex gap-3">
               <div class="">
-                <div class="profile-image rounded" :style="{'background-image':'url(' + $config.apiUrl + '/' + selectedDoctor.profile_photo + ')'}">
+                <div class="profile-image rounded"
+                  :style="{ 'background-image': 'url(' + $config.apiUrl + '/' + selectedDoctor.profile_photo + ')' }">
                 </div>
               </div>
               <div class="">
                 <h6 class="fullname">{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
-                <div class="time-zone mb-2"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
+                <div class="time-zone mb-2"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}
+                </div>
                 <div class="doctor-clinic">{{ selectedDoctor.clinic }}</div>
               </div>
             </div>
@@ -214,7 +205,7 @@ import Pagination from 'vue-pagination-2';
 
 export default {
   name: 'Search',
-  layout:'default',
+  layout: 'default',
   components: {
     Pagination,
   },
@@ -240,7 +231,7 @@ export default {
         phone: null,
         time: null,
       },
-      formValidation:{
+      formValidation: {
         phone: true,
         fullname: true
       },
@@ -314,13 +305,13 @@ export default {
     // this.bookSlots()
     this.successModal = new bootstrap.Modal(document.getElementById('successModal'))
   },
-  async asyncData({$axios, query}) {
+  async asyncData({ $axios, query }) {
     const apiUrl = process.env.API_URL
     const profession = await $axios.get(apiUrl + "/api-professions")
     const region = await $axios.get(apiUrl + "/api-regions")
     const clinic = await $axios.get(apiUrl + "/api-clinics")
 
-    const {data} = await $axios.get(apiUrl + '/api-doctors', {
+    const { data } = await $axios.get(apiUrl + '/api-doctors', {
       params: {
         'prof-id': query['prof-id'],
         'region-id': query['region-id'],
@@ -334,7 +325,7 @@ export default {
       doctors: data
     }
   },
-  head({doctors}) {
+  head({ doctors }) {
     return {
       title: 'Həkim axtarışı',
       meta: [
@@ -429,7 +420,7 @@ export default {
       this.myModal.show()
       // console.log(data)
     },
-    formValidationClass(){
+    formValidationClass() {
       this.formValidation = {
         phone: !!this.form.phone,
         fullname: !!this.form.fullname,

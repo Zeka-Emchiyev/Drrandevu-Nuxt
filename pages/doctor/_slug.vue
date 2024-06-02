@@ -1,11 +1,12 @@
 <template>
   <div>
     <div class="container">
-      <div :class="{'d-none':setActive}" class="row ">
+      <div :class="{ 'd-none': setActive }" class="row ">
         <div class="col-md-7">
           <div class="row">
             <div class="col-3 col-sm-4 col-md-5 col-lg-4 col-xl-3 ">
-              <div class="profile-image-main" :style="{'background-image': 'url(' + $config.apiUrl + '/'+ doctor.profile_photo + ')'}"></div>
+              <div class="profile-image-main"
+                :style="{ 'background-image': 'url(' + $config.apiUrl + '/' + doctor.profile_photo + ')' }"></div>
             </div>
 
             <div class="col-9 col-sm-8 col-md-7 col-lg-8 col-xl-9 ">
@@ -88,51 +89,46 @@
                 Ətraflı
               </span>
             </p>
-              <div class="d-block d-md-none">
+            <div class="d-block d-md-none">
               <div class="randevu-title mb-1">Pulsuz randevu təyin et</div>
-                <div  v-if="doctor.id ===159">
-                  <a class="btn btn-primary col-11 my-3 mx-auto" href="https://drrandevu.setmore.com/h7r676">Randevu al</a>
-<!--                  <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
-                </div>
-              <div :class="{'d-none': doctor.id===159}" class="container">
-                  <div class="row">
-                      <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
-                           :class="{ 'clinic-border': selectedBox === 'clinic' }">
-
-                          <div class="hold-on">
-                              <i class="icon-clinic bi bi-person-fill "></i>
-                              <span class="clinic-video-txt">Klinikada</span>
-                          </div>
-                      </div>
-                      <div @click="selectedBox = 'video'" class=" col-6 rounded-end b-default"
-                           :class="{ 'clinic-border': selectedBox === 'video' }">
-                          <div class="hold-on">
-<!--                              <img class="icon-clinic" src="../assets/Group 432.svg" alt="">-->
-                              <span class="clinic-video-txt">Video</span>
-                          </div>
-
-                      </div>
-                  </div>
-                </div>
-                  <div class="location-content mt-3">
-                      {{ doctor.clinic }}
-                  </div>
-                  <Calendar2  @dateSelected="showSelectedAppointmentModal"
-                              :doctor="doctor"
-                              @showMore="showMoreSlotsForDoctor"
-                              :selected-doctor="doctor"
-                              v-if="doctor.id"
-                              :buttonLink="buttonLink"
-                              :class="{'d-none': doctor.id===159}"
-                              />
-
+              <div v-if="doctor.id === 2079">
+                <a class="btn btn-primary col-11 my-3 mx-auto"
+                  href="https://drrandevu.setmore.com/stomatoloq-leyla-akbarli">Randevu al</a>
+                <!--                  <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
               </div>
-              <MoreSlotsModal
-                      :show="showMoreSlotsModal"
-                      :doctor="moreSlotsDoctor"
-                      @closeModal="showMoreSlotsModal = false"
-                      @dateSelected="showSelectedAppointmentModal"
-              />
+              <div v-if="doctor.id === 159">
+                <a class="btn btn-primary col-11 my-3 mx-auto" href="https://drrandevu.setmore.com/h7r676">Randevu al</a>
+                <!--                  <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
+              </div>
+              <div :class="{ 'd-none': shouldHide }" class="container">
+                <div class="row">
+                  <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
+                    :class="{ 'clinic-border': selectedBox === 'clinic' }">
+
+                    <div class="hold-on">
+                      <i class="icon-clinic bi bi-person-fill "></i>
+                      <span class="clinic-video-txt">Klinikada</span>
+                    </div>
+                  </div>
+                  <div @click="selectedBox = 'video'" class=" col-6 rounded-end b-default"
+                    :class="{ 'clinic-border': selectedBox === 'video' }">
+                    <div class="hold-on">
+                      <!--                              <img class="icon-clinic" src="../assets/Group 432.svg" alt="">-->
+                      <span class="clinic-video-txt">Video</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="location-content mt-3">
+                {{ doctor.clinic }}
+              </div>
+              <Calendar2 @dateSelected="showSelectedAppointmentModal" :doctor="doctor" @showMore="showMoreSlotsForDoctor"
+                :selected-doctor="doctor" v-if="doctor.id" :buttonLink="buttonLink" :class="{ 'd-none': shouldHide }" />
+
+            </div>
+            <MoreSlotsModal :show="showMoreSlotsModal" :doctor="moreSlotsDoctor" @closeModal="showMoreSlotsModal = false"
+              @dateSelected="showSelectedAppointmentModal" />
             <h2 id="scrollspyHeading3" class="mb-4 head">Sığorta </h2>
             <div>
               <!-- {{ doctor. }} -->
@@ -177,18 +173,24 @@
         <div class="col-md-5 shadow p-3 mb-5 bg-body rounded h-50 d-none d-md-flex  ">
           <div class="container">
             <h2 class="randevu-title">Pulsuz randevu təyin et</h2>
+            <div v-if="doctor.id === 2079">
+              <a class="btn btn-primary col-11 my-3 mx-auto"
+                href="https://drrandevu.setmore.com/stomatoloq-leyla-akbarli">Randevu al</a>
 
-            <div  v-if="doctor.id ===159">
+              <!--              <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
+            </div>
+
+            <div v-if="doctor.id === 159">
               <a class="btn btn-primary col-11 my-3 mx-auto" href="https://drrandevu.setmore.com/h7r676">Randevu al</a>
 
-<!--              <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
+              <!--              <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
             </div>
-            <div :class="{'d-none': doctor.id===159}">
-            <p class="randevu-type">Randevu tipini seçin</p>
+            <div :class="{ 'd-none': shouldHide }">
+              <p class="randevu-type">Randevu tipini seçin</p>
 
 
 
-            <!-- <div class="row justify-content-start ms-1">
+              <!-- <div class="row justify-content-start ms-1">
 
               <div class="col-6">
                 <div @click="selectedBox = 'clinic'"
@@ -219,71 +221,71 @@
             </div> -->
 
 
-            <div class="row text-center ms-1 ">
+              <div class="row text-center ms-1 ">
 
-              <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
-                :class="{ 'clinic-border': selectedBox === 'clinic' }">
+                <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
+                  :class="{ 'clinic-border': selectedBox === 'clinic' }">
 
-                <div class="hold-on">
-                  <i class="icon-clinic bi bi-person-fill "></i>
-                  <span class="clinic-video-txt">Klinikada</span>
+                  <div class="hold-on">
+                    <i class="icon-clinic bi bi-person-fill "></i>
+                    <span class="clinic-video-txt">Klinikada</span>
+                  </div>
+                </div>
+                <div @click="selectedBox = 'video'" class=" col-6 rounded-end b-default"
+                  :class="{ 'clinic-border': selectedBox === 'video' }">
+                  <div class="hold-on">
+                    <!--                  <img class="icon-clinic" src="../assets/Group 432.svg" alt="">-->
+                    <span class="clinic-video-txt">Video</span>
+                  </div>
+
                 </div>
               </div>
-              <div @click="selectedBox = 'video'" class=" col-6 rounded-end b-default"
-                :class="{ 'clinic-border': selectedBox === 'video' }">
-                <div class="hold-on">
-<!--                  <img class="icon-clinic" src="../assets/Group 432.svg" alt="">-->
-                  <span class="clinic-video-txt">Video</span>
-                </div>
+
+
+              <div>
+                <p class="location-content my-3">
+                  {{ doctor.clinic }}</p>
+              </div>
+              <div class="d-none d-md-block">
+                <client-only>
+                  <carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
+                    navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
+                    <slide v-for="day in monthlyDates" :key="$moment(day.date).format('MMM DD')">
+                      <div @click="setDay(day.date)" class="day-container"
+                        :class="{ 'bg-success text-white': selectedDay === day.date }">
+                        {{ $moment(day.date).format('MMM DD') }}
+                      </div>
+                      <div class="time-slots mt-4">
+                        <div v-for="(timeSlot, index) in day.timeSlots">
+                          <div v-if="index < 4 && !day.showMore" class="time-slot"
+                            :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                            @click="setSelectedTime(day, timeSlot)">
+                            {{ timeSlot.timeFormatted }}
+                          </div>
+                          <div v-if="day.showMore" class="time-slot"
+                            :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                            @click="setSelectedTime(day, timeSlot)">
+                            {{ timeSlot.timeFormatted }}
+                          </div>
+                        </div>
+                        <div v-show="!day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day)">daha çox
+                        </div>
+                        <div v-show="day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day, false)">daha
+                          az</div>
+                      </div>
+                    </slide>
+                  </carousel>
+                </client-only>
 
               </div>
-            </div>
 
-
-            <div>
-              <p class="location-content my-3">
-                {{ doctor.clinic }}</p>
-            </div>
-            <div class="d-none d-md-block">
-              <client-only >
-              <carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
-                        navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
-                <slide v-for="day in monthlyDates" :key="$moment(day.date).format('MMM DD')">
-                  <div @click="setDay(day.date)" class="day-container"
-                    :class="{ 'bg-success text-white': selectedDay === day.date }">
-                     {{ $moment(day.date).format('MMM DD') }}
-                  </div>
-                  <div class="time-slots mt-4">
-                    <div v-for="(timeSlot, index) in day.timeSlots">
-                      <div v-if="index < 4 && !day.showMore" class="time-slot"
-                        :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
-                        @click="setSelectedTime(day, timeSlot)">
-                        {{ timeSlot.timeFormatted }}
-                      </div>
-                      <div v-if="day.showMore" class="time-slot"
-                        :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
-                        @click="setSelectedTime(day, timeSlot)">
-                        {{ timeSlot.timeFormatted }}
-                      </div>
-                    </div>
-                    <div v-show="!day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day)">daha çox
-                    </div>
-                    <div v-show="day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day, false)">daha
-                      az</div>
-                  </div>
-                </slide>
-              </carousel>
-              </client-only>
-
-            </div>
-
-            <div class="text-center mt-2">
-              <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
-                      :class="{ 'text-white': !dateTimeSelected }" class="btn btn-primary d-none d-md-block col-11 my-3 mx-auto"
-                      :disabled="!dateTimeSelected">
-                Randevu al
-              </button>
-            </div>
+              <div class="text-center mt-2">
+                <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
+                  :class="{ 'text-white': !dateTimeSelected }"
+                  class="btn btn-primary d-none d-md-block col-11 my-3 mx-auto" :disabled="!dateTimeSelected">
+                  Randevu al
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -296,36 +298,41 @@
         <div class="modal-dialog">
           <div class="modal-content h-100">
             <div class="modal-header">
-                <router-link to="/" class="text-decoration-none">
-                    <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel" data-bs-dismiss="modal">Doctonline</h5>
-                </router-link>
+              <router-link to="/" class="text-decoration-none">
+                <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel" data-bs-dismiss="modal">Doctonline</h5>
+              </router-link>
             </div>
             <div class="modal-body position-relative">
               <button type="button" class="btn-close position-absolute" style="right: 15px; opacity: 0.2;"
                 data-bs-dismiss="modal" aria-label="Close"></button>
               <div class="container align-items-center justify-content-center my-5 ">
-                  <div class="d-flex gap-3">
-                      <div class="">
-                          <div class="profile-image rounded" :style="{'background-image': 'url(' +$config.apiUrl + '/'+ doctor.profile_photo + ')'}">
-                          </div>
-                      </div>
-                      <div class="">
-                          <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
-                          <div class="time-zone mb-2"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
-                          <div class="doctor-clinic">{{ doctor.clinic }}</div>
-                      </div>
+                <div class="d-flex gap-3">
+                  <div class="">
+                    <div class="profile-image rounded"
+                      :style="{ 'background-image': 'url(' + $config.apiUrl + '/' + doctor.profile_photo + ')' }">
+                    </div>
                   </div>
+                  <div class="">
+                    <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
+                    <div class="time-zone mb-2"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime
+                    }}</div>
+                    <div class="doctor-clinic">{{ doctor.clinic }}</div>
+                  </div>
+                </div>
 
                 <div class="mt-4 col-8">
                   <p class="doc-profession-modal"> Təsdiq üçün məlumatları doldurun</p>
                   <div>
                     <label class="doc-profession-modal mb-2 mt-2" for="">Ad, Soyad</label>
-                    <input v-model="form.fullname" :class="{'form-control':true, 'input-error': !formValidation.fullname}" type="text" placeholder="Firəngiz Vahabova">
+                    <input v-model="form.fullname"
+                      :class="{ 'form-control': true, 'input-error': !formValidation.fullname }" type="text"
+                      placeholder="Firəngiz Vahabova">
                   </div>
                 </div>
                 <div class="mb-1 col-8 mt-2 doc-profession-modal">
                   <label class="mb-2 " for="">Mobil nömrə</label>
-                  <input v-model="form.phone" :class="{'form-control':true, 'input-error': !formValidation.phone}" type="number" placeholder="0501234567">
+                  <input v-model="form.phone" :class="{ 'form-control': true, 'input-error': !formValidation.phone }"
+                    type="number" placeholder="0501234567">
                 </div>
               </div>
               <button type="button" class="col-12 btn btn-primary mb-4" @click="createAppointment">
@@ -344,24 +351,26 @@
         <div class="modal-dialog">
           <div class="modal-content h-100">
             <div class="modal-header">
-                <router-link to="/" class="text-decoration-none" >
-                  <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel" data-bs-dismiss="modal">Doctonline</h5>
-                </router-link>
+              <router-link to="/" class="text-decoration-none">
+                <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel" data-bs-dismiss="modal">Doctonline</h5>
+              </router-link>
             </div>
             <div class="modal-body mt-4">
-                    <div class="d-flex gap-3">
-                        <div class="">
-                            <div class="profile-image rounded" :style="{'background-image': 'url(' + $config.apiUrl + '/'+ doctor.profile_photo + ')'}">
-                            </div>
-                        </div>
-                        <div class="">
-                            <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
-                            <div class="time-zone mb-2"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
-                            <div class="doctor-clinic">{{ doctor.clinic }}</div>
-                        </div>
-                    </div>
+              <div class="d-flex gap-3">
+                <div class="">
+                  <div class="profile-image rounded"
+                    :style="{ 'background-image': 'url(' + $config.apiUrl + '/' + doctor.profile_photo + ')' }">
+                  </div>
+                </div>
+                <div class="">
+                  <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
+                  <div class="time-zone mb-2"> {{ $moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}
+                  </div>
+                  <div class="doctor-clinic">{{ doctor.clinic }}</div>
+                </div>
+              </div>
               <p class="ms-4 fullname mt-4">
-                  <img class="pe-2" src="@/assets/icons/check-circle.svg" alt="">
+                <img class="pe-2" src="@/assets/icons/check-circle.svg" alt="">
                 {{ result.message }}
               </p>
             </div>
@@ -380,8 +389,8 @@ import Calendar2 from "@/components/Calendar2.vue";
 import MoreSlotsModal from "@/components/MoreSlotsModal.vue";
 export default {
   name: 'slug',
-  layout:'doctor',
-  components: {MoreSlotsModal, Calendar2, FaqHolder, NavbarDoctor,  },
+  layout: 'doctor',
+  components: { MoreSlotsModal, Calendar2, FaqHolder, NavbarDoctor, },
   data() {
     return {
       selectedDay: null,//$moment().toDate().toISOString(),
@@ -390,8 +399,8 @@ export default {
       selectedBox: 'clinic',
       monthlyDates: [],
       timeSlots: [],
-      doctor:{},
-      setActive:false,
+      doctor: {},
+      setActive: false,
       form: {
         date: null,
         doctor_id: null,
@@ -400,25 +409,28 @@ export default {
         phone: null,
         time: null,
       },
-        formValidation:{
-            phone: true,
-            fullname: true
-        },
-        showMoreSlotsModal: false,
-        moreSlotsDoctor: null,
-        appointmentDate: null,
+      formValidation: {
+        phone: true,
+        fullname: true
+      },
+      showMoreSlotsModal: false,
+      moreSlotsDoctor: null,
+      appointmentDate: null,
       result: '',
-        buttonLink: true,
+      buttonLink: true,
     };
   },
   computed: {
     dateTimeSelected() {
       return this.selectedDay && this.selectedTime
+    },
+    shouldHide() {
+      return this.doctor.id === 159 || this.doctor.id === 2079;
     }
   },
   mounted() {
     this.takeAppointmentModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
-    this.successModal = new bootstrap.Modal(document.getElementById('successModal'),{ backdrop: 'static', keyboard: false })
+    this.successModal = new bootstrap.Modal(document.getElementById('successModal'), { backdrop: 'static', keyboard: false })
   },
   async fetch() {
     try {
@@ -432,7 +444,7 @@ export default {
       console.error(e);
     }
   },
-  head({doctor}) {
+  head({ doctor }) {
     return {
       title: 'Həkim profili',
       meta: [
@@ -446,43 +458,43 @@ export default {
   },
 
   methods: {
-    apointmentActive(){
+    apointmentActive() {
       this.setActive = true
     },
-      formValidationClass(){
-          this.formValidation = {
-              phone: !!this.form.phone,
-              fullname: !!this.form.fullname,
-          }
-          return Object.values(this.formValidation).every((v) => v)
-      },
-      showMoreSlotsForDoctor(doctor) {
-          this.moreSlotsDoctor = doctor;
-          this.showMoreSlotsModal = true;
-      },
-      showSelectedAppointmentModal(data) {
-          this.selectedDoctor = data.doctor
-          this.selectedTime = data.time
-          this.selectedDay = data.date
-          this.takeAppointmentModal.show()
-      },
+    formValidationClass() {
+      this.formValidation = {
+        phone: !!this.form.phone,
+        fullname: !!this.form.fullname,
+      }
+      return Object.values(this.formValidation).every((v) => v)
+    },
+    showMoreSlotsForDoctor(doctor) {
+      this.moreSlotsDoctor = doctor;
+      this.showMoreSlotsModal = true;
+    },
+    showSelectedAppointmentModal(data) {
+      this.selectedDoctor = data.doctor
+      this.selectedTime = data.time
+      this.selectedDay = data.date
+      this.takeAppointmentModal.show()
+    },
     createAppointment() {
-        let is_valid = this.formValidationClass()
-        if (is_valid) {
-            this.form.doctor_id = this.doctor.id
-            this.form.date = this.$moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
-            this.form.time = this.selectedTime;
-            this.$axios.post(this.$config.apiUrl + "/api-appointments/create", this.form)
-                .then((resp) => {
-                    console.log(resp)
-                    this.result = resp.data
-                    this.takeAppointmentModal.hide()
-                    this.successModal.show()
-                })
-                .catch(e => console.log(e))
-        }
-            this.form.fullname = ''
-            this.form.phone = ''
+      let is_valid = this.formValidationClass()
+      if (is_valid) {
+        this.form.doctor_id = this.doctor.id
+        this.form.date = this.$moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
+        this.form.time = this.selectedTime;
+        this.$axios.post(this.$config.apiUrl + "/api-appointments/create", this.form)
+          .then((resp) => {
+            console.log(resp)
+            this.result = resp.data
+            this.takeAppointmentModal.hide()
+            this.successModal.show()
+          })
+          .catch(e => console.log(e))
+      }
+      this.form.fullname = ''
+      this.form.phone = ''
     },
     generateDays() {
       // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
@@ -518,7 +530,7 @@ export default {
         })
       }
     },
-    monthlyDatesSlot(){
+    monthlyDatesSlot() {
       // Assume generateTimeSlots and monthlyDates are methods in your component
       this.monthlyDates = this.monthlyDates.map(day => {
         return {
