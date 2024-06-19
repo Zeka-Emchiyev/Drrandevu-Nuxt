@@ -458,6 +458,7 @@ export default {
     },
     apointmentActive() {
       this.setmoreIframeActive = true
+      window.scroll(0, 0);
     },
     formValidationClass() {
       this.formValidation = {
