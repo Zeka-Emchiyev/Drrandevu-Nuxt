@@ -1,9 +1,19 @@
 <template>
   <div>
     <div class="container">
-      <div :class="{ 'd-none': setActive }" class="row ">
+      <div class="row ">
+        <div v-if="setmoreIframeActive" class="col-12 my-4">
+          <div v-show="!setmoreIframeLoaded" class="text-center">
+            <div class="spinner-border text-success" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+          <iframe v-show="setmoreIframeLoaded" class="vh-100" @load="onIframeLoad"
+                  :src="doctor.setmore_url" scrolling="yes" width="100%" height="100%" frameborder="0" style="border-radius:8px;" />
+        </div>
         <div class="col-md-7">
-          <div class="row">
+          <div class="row" v-show="!setmoreIframeActive">
             <div class="col-3 col-sm-4 col-md-5 col-lg-4 col-xl-3 ">
               <div class="profile-image-main"
                 :style="{ 'background-image': 'url(' + $config.apiUrl + '/' + doctor.profile_photo + ')' }"></div>
@@ -89,17 +99,12 @@
                 Ətraflı
               </span>
             </p>
-            <div class="d-block d-md-none">
+            <div v-if="!setmoreIframeActive" class="d-block d-md-none">
               <div class="randevu-title mb-1">Pulsuz randevu təyin et</div>
-              <div v-if="doctor.id === 2079">
-                <a class="btn btn-primary col-11 my-3 mx-auto"
-                  href="https://drrandevu.setmore.com/stomatoloq-leyla-akbarli">Randevu al</a>
-                <!--                  <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
+              <div>
+                <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()">Randevu al</button>
               </div>
-              <div v-if="doctor.id === 159">
-                <a class="btn btn-primary col-11 my-3 mx-auto" href="https://drrandevu.setmore.com/h7r676">Randevu al</a>
-                <!--                  <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
-              </div>
+
               <div :class="{ 'd-none': shouldHide }" class="container">
                 <div class="row">
                   <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
@@ -170,25 +175,14 @@
           </div>
 
         </div>
-        <div class="col-md-5 shadow p-3 mb-5 bg-body rounded h-50 d-none d-md-flex  ">
+        <div v-if="!setmoreIframeActive" class="col-md-5 shadow p-3 mb-5 bg-body rounded h-50 d-none d-md-flex">
           <div class="container">
             <h2 class="randevu-title">Pulsuz randevu təyin et</h2>
-            <div v-if="doctor.id === 2079">
-              <a class="btn btn-primary col-11 my-3 mx-auto"
-                href="https://drrandevu.setmore.com/stomatoloq-leyla-akbarli">Randevu al</a>
-
-              <!--              <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
-            </div>
-
-            <div v-if="doctor.id === 159">
-              <a class="btn btn-primary col-11 my-3 mx-auto" href="https://drrandevu.setmore.com/h7r676">Randevu al</a>
-
-              <!--              <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()" >Randevu al</button>-->
+            <div>
+                <button class="btn btn-primary col-11 my-3 mx-auto" @click="apointmentActive()">Randevu al</button>
             </div>
             <div :class="{ 'd-none': shouldHide }">
               <p class="randevu-type">Randevu tipini seçin</p>
-
-
 
               <!-- <div class="row justify-content-start ms-1">
 
@@ -400,7 +394,7 @@ export default {
       monthlyDates: [],
       timeSlots: [],
       doctor: {},
-      setActive: false,
+      setmoreIframeActive: false,
       form: {
         date: null,
         doctor_id: null,
@@ -418,6 +412,7 @@ export default {
       appointmentDate: null,
       result: '',
       buttonLink: true,
+      setmoreIframeLoaded: false,
     };
   },
   computed: {
@@ -425,7 +420,7 @@ export default {
       return this.selectedDay && this.selectedTime
     },
     shouldHide() {
-      return this.doctor.id === 159 || this.doctor.id === 2079;
+      return this.doctor.setmore_url;
     }
   },
   mounted() {
@@ -458,8 +453,11 @@ export default {
   },
 
   methods: {
+    onIframeLoad() {
+      this.setmoreIframeLoaded = true
+    },
     apointmentActive() {
-      this.setActive = true
+      this.setmoreIframeActive = true
     },
     formValidationClass() {
       this.formValidation = {
