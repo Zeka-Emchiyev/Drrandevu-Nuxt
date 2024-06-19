@@ -94,7 +94,6 @@ export default {
       document.getElementById('appointmentSlotsMoreModal').addEventListener('hidden.bs.modal',  () => {
           this.$emit("closeModal");
       })
-    console.log(this.doctor)
   },
 
   watch: {

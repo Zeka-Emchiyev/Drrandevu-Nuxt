@@ -81,7 +81,6 @@ export default {
     },
     mounted() {
       this.fetchProfessions();
-      console.log('aasdasd')
     },
     methods: {
       async fetchProfessions() {
